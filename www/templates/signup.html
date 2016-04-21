@@ -1,0 +1,21 @@
+<ion-view view-title="SignUp" align-title="left">
+    <ion-content style="background: url(img/login.jpg) center; background-size: cover;">
+        <div class="hero no-header flat">
+            <div class="content">
+                <div class="app-icon"></div>
+                <h1>SocialDRONE</h1>
+            </div>
+        </div>
+        <div class="list">
+            <form name="myForm" ng-submit="submitForm(myForm.$valid)"></form>
+            <ion-md-input placeholder="Username" highlight-color="balanced" type="text" ng-model="newUser.username" required="required"></ion-md-input>
+            <ion-md-input placeholder="Name" highlight-color="energized" type="text" ng-model="newUser.name" required="required"></ion-md-input>
+            <ion-md-input placeholder="Lastname" highlight-color="balanced" type="text" ng-model="newUser.lastname" required="required"></ion-md-input>
+            <ion-md-input placeholder="Email" highlight-color="energized" type="email" ng-model="newUser.mail" required="required"></ion-md-input>
+            <ion-md-input placeholder="Password" highlight-color="balanced" type="password" ng-model="newUser.password" required="required"></ion-md-input>
+        </div>
+        <div class="padding">
+            <button class="button button-full button-bar-calm ink" ng-disabled="myForm.$invalid"  ng-click="crearUser()">Sign UP</button>
+        </div>
+    </ion-content>
+</ion-view>

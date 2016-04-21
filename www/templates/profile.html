@@ -1,0 +1,48 @@
+<ion-view view-title="Profile">
+    <ion-content ng-class="{expanded:$scope.isExpanded}">
+        <div class="hero slide-up" style="background-image: url('img/profile-bg.jpg');">
+            <div class="content">
+                <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div>
+                <h3><a class="light">Daenerys Targaryen</a></h3>
+                <h4>dragon_mommy</h4>
+            </div>
+        </div>
+        <div class="tabs tabs-dark tabs-icon-top static">
+            <a ui-sref="app.activity" class="tab-item">
+                <i class="icon ion-arrow-graph-up-right"></i> Activity
+            </a>
+            <a ui-sref="app.friends" class="tab-item">
+                <i class="icon ion-android-people"></i> Friends
+            </a>
+            <a ui-sref="app.gallery" class="tab-item">
+                <i class="icon ion-images"></i> Photos
+            </a>
+        </div>
+        <h4 class="content padding double-padding-x">Users in SocialDrone</h4>
+        <div class="list ">
+            <div class="list">
+            <a class="item item-avatar item-icon-right" ng-repeat="user in users"  ng-click="selectUser(user)">
+                <img src="img/profile.png">
+                <h2>{{ user.username }}</h2>
+                <p>{{ user.mail }}</p>
+                <i class="icon ion-chatbubble muted"></i>
+            </a>
+            </div>
+            <h4 class="content padding double-padding-x">User information</h4>
+            <div class="list">
+                <label class="item item-input">
+                    <input type="text" placeholder="Username" ng-model="myUser.username">
+                </label>
+
+                <label class="item item-input">
+                    <input type="email" placeholder="Mail" ng-model="myUser.mail">
+                </label>
+
+                <button class="button button-royal" ng-click="modifyEmail()">Modify mail</button>
+                <button class="button button-assertive" ng-click="deleteUser()">Delete User</button>
+            </div>
+
+
+        </div>
+    </ion-content>
+</ion-view>
