@@ -2,12 +2,12 @@
 'use strict';
 var base_url = "http://localhost:8080";
 angular.module('starter.controllers', [])
-
 .controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
+
     $scope.hasHeaderFabRight = false;
 
     var navIcons = document.getElementsByClassName('ion-navicon');
@@ -87,12 +87,29 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk) {
+.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http) {
     $scope.$parent.clearFabs();
+    $scope.loginUser={};
+    $scope.currentUser={};
     $timeout(function() {
         $scope.$parent.hideHeader();
     }, 0);
     ionicMaterialInk.displayEffect();
+    $scope.loginUser= function () {
+        if ($scope.loginUser.username!=undefined && $scope.loginUser.password!=undefined){
+            $http.post(base_url+'/authenticate',{
+                username: $scope.loginUser.username,
+                password: $scope.loginUser.password,
+            }).success(function (data) {
+                    $scope.loginUser.username=null;
+                    $scope.loginUser.password=null;
+                    sessionStorage["user"]=JSON.stringify(data);
+                    $state.go('app.profile');
+            }).error(function (error, status, headers, config) {
+                    console.log(error);
+                });
+        }
+    };
 })
 
     .controller("OauthExample", function($scope, $cordovaOauth) {
@@ -125,19 +142,63 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 })
     
-.controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = true;
     $scope.$parent.setExpanded(true);
     $scope.$parent.setHeaderFab('right');
+    $scope.messages = {};
+    $scope.message1 = {};
+    $scope.editMessage = {};
+    $scope.info = {};
+    $scope.newMessage = {};
+    $scope.usuar = {};
 
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
             selector: '.animate-fade-slide-in .item'
         });
     }, 200);
-
+    getMessage();
+    $scope.likeMenssage = function(id){
+        $http.post(base_url+"/message/" + id +"/like" , {token: $scope.usuar.token})
+            .success(function (data, status, headers, config) {
+                getMessage();
+            })
+            .error(function (error, status, headers, config) {
+                console.log(error);
+            });
+    }
+    $scope.borrarMensaje = function (id) {
+        if(sessionStorage["user"]!=undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': $scope.usuar.token}})
+                .success(function (data, status, headers, config) {
+                    getMessage();
+                })
+                .error(function (error, status, headers, config) {
+                    console.log(err);
+                });
+        }
+    }
+    function getMessage() {
+        if (sessionStorage["user"] != undefined)
+            $scope.usuar = JSON.parse(sessionStorage["user"]);
+        $http.get(base_url + "/message") //hacemos get de todos los messages.js
+            .success(function (data) {
+                $scope.messages = data;
+                $http.get(base_url + '/users/' + $scope.usuar.userid, {headers: {'x-access-token': $scope.usuar.token}})
+                    .success(function (data) {
+                        $scope.info = data;
+                    })
+                    .error(function (err) {
+                    });
+            })
+            .error(function (err) {
+                console.log(err);
+            });
+    }
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 })

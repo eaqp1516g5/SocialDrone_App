@@ -7,15 +7,18 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
     $scope.myUser={};
     $scope.us={};
     function getUsers() {
-        $http.get(base_url + '/users')
-            .success(function (data) {
-                console.log(data);
-                $scope.users = data;
+        if(sessionStorage["user"]!=undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.get(base_url + '/users',  {headers: {'x-access-token': usuario.token}})
+                .success(function (data) {
+                    console.log(data);
+                    $scope.users = data;
 
-            })
-            .error(function (err) {
-                console.log(err);
-            });
+                })
+                .error(function (err) {
+                    console.log(err);
+                });
+        }
     }
     getUsers();
     $scope.$parent.showHeader();
