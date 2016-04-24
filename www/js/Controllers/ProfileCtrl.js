@@ -70,39 +70,23 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
     };
 
     $scope.modifyEmail = function () {
-        $http.put(base_url+'/users/'+$scope.myUser.username,{
-            mail: $scope.myUser.mail
-        }).success(function () {
-                
-                console.log('Modificado');
-                $http.get(base_url + '/users')
-                    .success(function (data) {
-                        console.log(data);
-                        setTimeout(function () {
-                            $scope.$apply(function () {
-
-                                $scope.users=data;
-                            });
-                        },500);
-                       // $scope.users = data;
-                        $scope.myUser.username=null;
-                        $scope.myUser.mail=null;
-
-                    })
-                    .error(function (err) {
-                        console.log(err);
+        if (sessionStorage["user"] != undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.put(base_url + '/users/' + $scope.myUser.username, {
+                token: usuario.token,
+                mail: $scope.myUser.mail
+            }).success(function () {
+                    console.log('Modificado');
+                    getUsers();
+                })
+                .error(function (error) {
+                    console.log(error);
+                    $ionicPopup.alert({
+                        title: 'Error',
+                        content: error
                     });
-
-
-
-            })
-            .error(function (error) {
-                console.log(error);
-                $ionicPopup.alert({
-                    title: 'Error',
-                    content: error
                 });
-            });
+        }
     }
     
 });

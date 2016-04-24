@@ -101,10 +101,12 @@ angular.module('starter.controllers', [])
                 username: $scope.loginUser.username,
                 password: $scope.loginUser.password,
             }).success(function (data) {
-                    $scope.loginUser.username=null;
-                    $scope.loginUser.password=null;
-                    sessionStorage["user"]=JSON.stringify(data);
+                if(data.success!=false) {
+                    $scope.loginUser.username = null;
+                    $scope.loginUser.password = null;
+                    sessionStorage["user"] = JSON.stringify(data);
                     $state.go('app.profile');
+                }
             }).error(function (error, status, headers, config) {
                     console.log(error);
                 });
