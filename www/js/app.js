@@ -43,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             'menuContent': {
                 templateUrl: 'templates/activity.html',
                 controller: 'ActivityCtrl'
-            },
+            }/*,
             'fabContent': {
                 template: '<button id="fab-activity" ui-sref="app.createmsg" class="button button-fab button-fab-bottom-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
                 controller: function ($timeout) {
@@ -51,7 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                         document.getElementById('fab-activity').classList.toggle('on');
                     }, 200);
                 }
-            }
+            }*/
         }
     })
         .state('app.createmsg', {
@@ -59,8 +59,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             views: {
                 'menuContent': {
                     templateUrl: 'templates/createmsg.html',
-                    controller: 'ActivityCtrl'
-                },
+                    controller: 'UpdatemsgCtrl'
+                }/*,
                 'fabContent': {
                     template: '<button id="fab-activity" ui-sref="app.createmsg" class="button button-fab button-fab-bottom-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
                     controller: function ($timeout) {
@@ -68,7 +68,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                             document.getElementById('fab-activity').classList.toggle('on');
                         }, 200);
                     }
-                }
+                }*/
             }
         })
 

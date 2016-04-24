@@ -1,5 +1,12 @@
-<ion-view view-title="Create message">
+<ion-view view-title="{{message.username.username}}">
     <ion-content ng-class="{expanded:isExpanded}">
-
+                <div class="list">
+                    <label class="item item-input">
+                        <input type="text" placeholder="{{message.text}}" ng-model="editMessage.text">
+                    </label>
+                    <div align="center">
+                        <button ng-click="updateMessage(message._id)" class="button button-bar-calm">Send</button>
+                    </div>
+                </div>
     </ion-content>
 </ion-view>

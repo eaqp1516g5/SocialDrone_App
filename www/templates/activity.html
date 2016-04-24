@@ -1,19 +1,26 @@
 <ion-view view-title="Messages">
     <ion-content ng-class="{expanded:isExpanded}">
+        <div class="list">
+            <label class="item item-input">
+                <input type="text" placeholder="What are you doing..." ng-model="newMessage.message">
+            </label>
+            <div align="center">
+            <button ng-click="enviarMensaje()" class="button button-bar-calm">Send</button>
+            </div>
+        </div>
         <div ng-repeat="msg in messages">
         <div class="item card-item">
             <div class="card stable-bg ink ink-dark">
                 <div class="item item-avatar item-text-wrap">
-                    <div ng-if="jamon">
+                    <div align="right" ng-if="usuar.userid==msg.username._id"><button class="btn btn-sm bar-energized" ng-click="editando(msg)"><i class="ion-edit "></i></button><button class="btn btn-sm button-assertive" ng-click="borrarMensaje(msg._id)"><i class="ion-trash-b"></i></button> </div>
                     <span class="avatar" style="background-image: url('img/tyrion.jpg');"></span>
-                    </div>
-                    <div align="right"><button class="btn btn-sm" ng-click="borrarMensaje(msg._id)">x</button> </div>
                     <strong>{{msg.username.username}}</strong> says "{{msg.text}}"
-                    <div class="card-footer text-right">
+                    </div>
+                    <div class="card-footer text-right padding">
                         <i ng-click="d()" class="icon ion-chatbubble positive"></i> {{msg.comment.length}}
                         <button ng-click="likeMenssage(msg._id)"><i class="icon ion-heart assertive"></i> {{msg.like}}</button>
                         <div class="pull-left">
-                            <i class="icon ion-clock"></i> {{msg.Date}}
+                            <h4><i class="icon ion-clock"></i>{{msg.Date}}</h4>
                         </div>
                     </div>
                 </div>

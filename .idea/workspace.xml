@@ -2,102 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5da7026-c1c8-4958-bf11-0cd64f19674e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/Gruntfile.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/component.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/config/jsdoc.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/config/karma.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/lib/angular-1.1.5.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/$resolve.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/$templateFactory.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/$urlMatcherFactory.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/UrlMatcher.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/common.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/global.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/resolve.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/scripts/linenumber.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/scripts/prettify/Apache-License-2.0.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/scripts/prettify/lang-css.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/scripts/prettify/prettify.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/styles/jsdoc-default.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/styles/prettify-jsdoc.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/styles/prettify-tomorrow.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/templateFactory.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/doc/urlMatcherFactory.js.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/contacts.detail.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/contacts.detail.item.edit.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/contacts.detail.item.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/contacts.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/contacts.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/contacts.list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/factory.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/module.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/states.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/sample/styles.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/compat.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/compat/matchers.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/compat/routeParamsSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/compat/routeSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/debug.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/lib/angular-mocks-1.1.5.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/resolveSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/stateDirectivesSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/stateFiltersSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/stateSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/templateFactorySpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/testUtils.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/urlMatcherFactorySpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/urlRouterSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/test/viewDirectiveSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/lib/angular/index.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/angular.min.js.gzip" afterPath="$PROJECT_DIR$/www/lib/angular/angular.min.js.gzip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/Controllers/ProfileCtrl.js" afterPath="$PROJECT_DIR$/www/js/Controllers/ProfileCtrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/app.js" afterPath="$PROJECT_DIR$/www/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controllers.js" afterPath="$PROJECT_DIR$/www/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-animate/.bower.json" afterPath="$PROJECT_DIR$/www/lib/angular-animate/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-animate/README.md" afterPath="$PROJECT_DIR$/www/lib/angular-animate/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-animate/angular-animate.js" afterPath="$PROJECT_DIR$/www/lib/angular-animate/angular-animate.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-animate/angular-animate.min.js" afterPath="$PROJECT_DIR$/www/lib/angular-animate/angular-animate.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-animate/angular-animate.min.js.map" afterPath="$PROJECT_DIR$/www/lib/angular-animate/angular-animate.min.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-animate/bower.json" afterPath="$PROJECT_DIR$/www/lib/angular-animate/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-sanitize/.bower.json" afterPath="$PROJECT_DIR$/www/lib/angular-sanitize/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-sanitize/README.md" afterPath="$PROJECT_DIR$/www/lib/angular-sanitize/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-sanitize/angular-sanitize.js" afterPath="$PROJECT_DIR$/www/lib/angular-sanitize/angular-sanitize.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-sanitize/angular-sanitize.min.js" afterPath="$PROJECT_DIR$/www/lib/angular-sanitize/angular-sanitize.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-sanitize/angular-sanitize.min.js.map" afterPath="$PROJECT_DIR$/www/lib/angular-sanitize/angular-sanitize.min.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-sanitize/bower.json" afterPath="$PROJECT_DIR$/www/lib/angular-sanitize/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/.bower.json" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/LICENSE" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/README.md" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/bower.json" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/angular-ui-router.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/release/angular-ui-router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/release/angular-ui-router.min.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/release/angular-ui-router.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/common.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/common.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/resolve.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/resolve.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/state.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/state.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/stateDirectives.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/stateDirectives.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/stateFilters.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/stateFilters.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/templateFactory.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/templateFactory.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/urlMatcherFactory.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/urlMatcherFactory.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/urlRouter.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/urlRouter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/view.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular-ui-router/src/viewDirective.js" afterPath="$PROJECT_DIR$/www/lib/angular-ui-router/src/viewDirective.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/.bower.json" afterPath="$PROJECT_DIR$/www/lib/angular/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/README.md" afterPath="$PROJECT_DIR$/www/lib/angular/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/angular-csp.css" afterPath="$PROJECT_DIR$/www/lib/angular/angular-csp.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/angular.js" afterPath="$PROJECT_DIR$/www/lib/angular/angular.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/angular.min.js" afterPath="$PROJECT_DIR$/www/lib/angular/angular.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/angular.min.js.map" afterPath="$PROJECT_DIR$/www/lib/angular/angular.min.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/bower.json" afterPath="$PROJECT_DIR$/www/lib/angular/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/angular/package.json" afterPath="$PROJECT_DIR$/www/lib/angular/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/activity.html" afterPath="$PROJECT_DIR$/www/templates/activity.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/login.html" afterPath="$PROJECT_DIR$/www/templates/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/createmsg.html" afterPath="$PROJECT_DIR$/www/templates/createmsg.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controllers.js" afterPath="$PROJECT_DIR$/www/js/controllers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/app.js" afterPath="$PROJECT_DIR$/www/js/app.js" />
     </list>
     <ignored path="SocialDrone_App.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -121,8 +29,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7545126">
-              <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.83047944">
+              <caret line="85" column="45" selection-start-line="85" selection-start-column="45" selection-end-line="85" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -131,8 +39,8 @@
       <file leaf-file-name="createmsg.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/createmsg.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="36" selection-start-line="0" selection-start-column="36" selection-end-line="0" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="4" column="100" selection-start-line="4" selection-start-column="84" selection-end-line="4" selection-end-column="100" />
               <folding />
             </state>
           </provider>
@@ -148,34 +56,24 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/profile.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="activity.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/activity.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding>
-                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="menu.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.076923">
-              <caret line="20" column="69" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SignupCtrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/Controllers/SignupCtrl.js">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
+              <caret line="9" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="14" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,8 +81,8 @@
       <file leaf-file-name="controllers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.5862069">
-              <caret line="182" column="5" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="284" column="0" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -210,9 +108,9 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/www/js/Controllers/ProfileCtrl.js" />
         <option value="$PROJECT_DIR$/www/templates/login.html" />
-        <option value="$PROJECT_DIR$/www/js/controllers.js" />
         <option value="$PROJECT_DIR$/www/templates/activity.html" />
         <option value="$PROJECT_DIR$/www/templates/createmsg.html" />
+        <option value="$PROJECT_DIR$/www/js/controllers.js" />
         <option value="$PROJECT_DIR$/www/js/app.js" />
       </list>
     </option>
@@ -230,7 +128,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -258,8 +156,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -324,72 +220,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocialDrone_App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocialDrone_App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ionic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocialDrone_App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocialDrone_App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ionic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocialDrone_App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocialDrone_App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -436,6 +266,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -471,6 +303,11 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -515,26 +352,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24776785" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24776119" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32733223" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32569557" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -545,7 +382,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32733223" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32569557" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24776785" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -572,15 +409,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -588,138 +417,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/www/templates/createmsg.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ionic.project">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5384617">
-          <caret line="10" column="105" selection-start-line="10" selection-start-column="105" selection-end-line="10" selection-end-column="105" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/signup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scss/ionic.app.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2195122">
-          <caret line="17" column="58" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic/scss/_button-bar.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.423077">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic/css/ionic.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic/css/ionic.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="116.53658">
-          <caret line="22" column="66945" selection-start-line="22" selection-start-column="66941" selection-end-line="22" selection-end-column="66945" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/Controllers/SignupCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.109848484">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <caret line="4" column="100" selection-start-line="4" selection-start-column="84" selection-end-line="4" selection-end-column="100" />
           <folding />
         </state>
       </provider>
@@ -732,30 +433,200 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
+    <entry file="file://$PROJECT_DIR$/www/templates/profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.076923">
-          <caret line="20" column="69" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="69" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/activity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5862069">
-          <caret line="182" column="5" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="284" column="0" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ionic.project">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.461538">
+          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/signup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.461538">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scss/ionic.app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.2195122">
+          <caret line="17" column="58" selection-start-line="17" selection-start-column="57" selection-end-line="17" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic/scss/_button-bar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.423077">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic/css/ionic.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic/css/ionic.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="116.53658">
+          <caret line="22" column="66945" selection-start-line="22" selection-start-column="66941" selection-end-line="22" selection-end-column="66945" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.109848484">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/Controllers/ProfileCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="19" selection-start-line="59" selection-start-column="19" selection-end-line="59" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.076923">
+          <caret line="20" column="40" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.5">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/Controllers/SignupCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/friends.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8168761">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/activity.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="14" />
           <folding>
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -763,15 +634,25 @@
     <entry file="file://$PROJECT_DIR$/www/templates/createmsg.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="36" selection-start-line="0" selection-start-column="36" selection-end-line="0" selection-end-column="36" />
+          <caret line="4" column="100" selection-start-line="4" selection-start-column="84" selection-end-line="4" selection-end-column="100" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="284" column="0" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7545126">
-          <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.83047944">
+          <caret line="85" column="45" selection-start-line="85" selection-start-column="45" selection-end-line="85" selection-end-column="45" />
           <folding />
         </state>
       </provider>

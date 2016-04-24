@@ -154,6 +154,11 @@ angular.module('starter.controllers', [])
     $scope.info = {};
     $scope.newMessage = {};
     $scope.usuar = {};
+    $scope.ed={};
+    $scope.editando = function(se){
+        sessionStorage["msg"]=JSON.stringify(se);
+        $state.go('app.createmsg');
+    }
 
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
@@ -182,6 +187,49 @@ angular.module('starter.controllers', [])
                 });
         }
     }
+    $scope.enviarMensaje = function(id) {
+        if(sessionStorage["user"]!=undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            if (id == undefined) {
+                $http.post(base_url + "/message", {
+                        username: usuario.userid,
+                        text: $scope.newMessage.message,
+                        token: usuario.token
+                    })
+                    .success(function (data, status, headers, config) {
+                        getMessage();
+                        text: $scope.newMessage.message=null;
+                        console.log(data);
+                    })
+                    .error(function (error, status, headers, config) {
+                        console.log(error);
+                    });
+            } else {
+                $http.post(base_url + "/comment/" + id, {
+                        username: $scope.info.username,
+                        id: usuario.userid,
+                        text: $scope.newComment.message,
+                        token: usuario.token
+                    })
+                    .success(function (data, status, headers, config) {
+                        $http.get(base_url + "/message/" + id) //hacemos get de todos los users
+                            .success(function (data) {
+                                $scope.message1 = data;
+                                $scope.comment = data.comment;
+                                $scope.newComment.message = null;
+                                console.log(data);
+                                getMessage();
+                            })
+                            .error(function (err) {
+                                console.log(err);
+                            });
+                    })
+                    .error(function (error, status, headers, config) {
+                        console.log(error);
+                    });
+            }
+        }
+    };
     function getMessage() {
         if (sessionStorage["user"] != undefined)
             $scope.usuar = JSON.parse(sessionStorage["user"]);
@@ -202,6 +250,42 @@ angular.module('starter.controllers', [])
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 })
+    .controller('UpdatemsgCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
+        $scope.$parent.showHeader();
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = true;
+        $scope.$parent.setExpanded(true);
+        $scope.$parent.setHeaderFab('right');
+        $scope.message = {};
+        $scope.editMessage = {};
+        $scope.usuar = {};
+
+        $scope.updateMessage = function (id) {
+            $http.put(base_url+'/message/'+id,{
+                text: $scope.editMessage.text,
+                token: $scope.usuar.token
+            }).success(function () {
+                    $state.go('app.activity');
+                    $scope.editMessage.text=null;
+                })
+                .error(function (error, status, headers, config) {
+                    console.log(error);
+                });
+        };
+
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideIn({
+                selector: '.animate-fade-slide-in .item'
+            });
+        }, 200);
+        getMessage();
+        function getMessage() {
+            $scope.usuar = JSON.parse(sessionStorage["user"]);
+            $scope.message=JSON.parse(sessionStorage["msg"])
+        }
+        // Activate ink for controller
+        ionicMaterialInk.displayEffect();
+    })
 
 .controller('GalleryCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {
     $scope.$parent.showHeader();
