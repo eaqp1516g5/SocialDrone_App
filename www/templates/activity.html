@@ -18,7 +18,7 @@
                     </div>
                     <div class="card-footer text-right padding">
                         <i ng-click="d()" class="icon ion-chatbubble positive"></i> {{msg.comment.length}}
-                        <button ng-click="likeMenssage(msg._id)"><i class="icon ion-heart assertive"></i> {{msg.like}}</button>
+                        <a  ng-click="likeMenssage(msg._id)"><i class="icon ion-heart assertive"></i> {{msg.like}}</a>
                         <div class="pull-left">
                             <h4><i class="icon ion-clock"></i>{{msg.Date}}</h4>
                         </div>

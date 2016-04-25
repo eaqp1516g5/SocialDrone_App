@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http) {
+.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http,$ionicPopup) {
     $scope.$parent.clearFabs();
     $scope.loginUser={};
     $scope.currentUser={};
@@ -99,7 +99,7 @@ angular.module('starter.controllers', [])
         if ($scope.loginUser.username!=undefined && $scope.loginUser.password!=undefined){
             $http.post(base_url+'/authenticate',{
                 username: $scope.loginUser.username,
-                password: $scope.loginUser.password,
+                password: $scope.loginUser.password
             }).success(function (data) {
                 if(data.success!=false) {
                     $scope.loginUser.username = null;
@@ -107,7 +107,13 @@ angular.module('starter.controllers', [])
                     sessionStorage["user"] = JSON.stringify(data);
                     $state.go('app.profile');
                 }
-            }).error(function (error, status, headers, config) {
+                else{
+                    $ionicPopup.alert({
+                        title: 'Error ',
+                        content: data.message
+                    });
+                }
+            }).error(function (error) {
                     console.log(error);
                 });
         }
