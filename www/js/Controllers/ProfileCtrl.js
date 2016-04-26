@@ -6,13 +6,33 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
     $scope.users={};
     $scope.myUser={};
     $scope.us={};
+    $scope.currentUser={};
+
+
+    function getUser() {
+        if (sessionStorage["user"] != undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.get(base_url + '/users/' + usuario.userid, {headers: {'x-access-token': usuario.token}})
+                .success(function (data) {
+                    $scope.currentUser=data;
+                    console.log($scope.currentUser);
+                    
+                })
+                .error(function (err) {
+                });
+        }
+    }
+    getUser();
     function getUsers() {
+        console.log('Lleho');
         if(sessionStorage["user"]!=undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
             $http.get(base_url + '/users',  {headers: {'x-access-token': usuario.token}})
                 .success(function (data) {
                     console.log(data);
                     $scope.users = data;
+                    $scope.currentUser=usuario;
+                    console.log($scope.currentUser);
 
                 })
                 .error(function (err) {
@@ -49,24 +69,29 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
     };
 
     $scope.deleteUser = function () {
-        $http.delete(base_url+'/users/'+$scope.myUser.username).success(function(){
-            $scope.myUser.username=null;
-            $scope.myUser.mail=null;
-            $http.get(base_url + '/users')
-                .success(function (data) {
-                    console.log(data);
-                    $scope.users = data;
-                })
-                .error(function (err) {
-                    console.log(err);
+        console.log('Entro');
+        if (sessionStorage["user"] != undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.delete(base_url + '/users/' + $scope.myUser.username, {headers: {'x-access-token': usuario.token}}).success(function () {
+                $scope.myUser.username = null;
+                $scope.myUser.mail = null;
+                $http.get(base_url + '/users', {headers: {'x-access-token': usuario.token}})
+                    .success(function (data) {
+                        console.log(data);
+                        $scope.users = data;
+                    })
+                    .error(function (err) {
+                        console.log(err);
+                    });
+            }).error(function (error, status, headers, config) {
+                console.log(error);
+                $ionicPopup.alert({
+                    title: 'Error',
+                    content: error
                 });
-        }).error(function (error, status, headers, config) {
-            console.log(error);
-            $ionicPopup.alert({
-                title: 'Error',
-                content: error
             });
-        });
+        }
+        
     };
 
     $scope.modifyEmail = function () {

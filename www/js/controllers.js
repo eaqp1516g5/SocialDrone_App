@@ -1,6 +1,6 @@
 /* global angular, document, window */
 'use strict';
-var base_url = "http://localhost:8080";
+var base_url = "http://147.83.7.159:8080";
 angular.module('starter.controllers', [])
 .controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
     // Form data for the login modal
@@ -166,7 +166,7 @@ angular.module('starter.controllers', [])
     $scope.editando = function(se){
         sessionStorage["msg"]=JSON.stringify(se);
         $state.go('app.createmsg');
-    }
+    };
 
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
@@ -182,7 +182,7 @@ angular.module('starter.controllers', [])
             .error(function (error, status, headers, config) {
                 console.log(error);
             });
-    }
+    };
     $scope.borrarMensaje = function (id) {
         if(sessionStorage["user"]!=undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
@@ -194,7 +194,7 @@ angular.module('starter.controllers', [])
                     console.log(err);
                 });
         }
-    }
+    };
     $scope.enviarMensaje = function(id) {
         if(sessionStorage["user"]!=undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
