@@ -10,12 +10,14 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
 
 
     function getUser() {
+        console.log(sessionStorage["user"]);
         if (sessionStorage["user"] != undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
+            console.log('usuario: '+usuario);
             $http.get(base_url + '/users/' + usuario.userid, {headers: {'x-access-token': usuario.token}})
                 .success(function (data) {
                     $scope.currentUser=data;
-                    console.log($scope.currentUser);
+                    console.log($scope.currentUser.imageUrl);
                     
                 })
                 .error(function (err) {

@@ -1,12 +1,13 @@
 /* global angular, document, window */
 'use strict';
-var base_url = "http://147.83.7.159:8080";
-angular.module('starter.controllers', [])
+var base_url = "http://localhost:8080";
+angular.module('starter.controllers', ['ngOpenFB'])
 .controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
+    $scope.usuar={};
 
     $scope.hasHeaderFabRight = false;
 
@@ -86,8 +87,20 @@ angular.module('starter.controllers', [])
         }
     };
 })
-
-.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http,$ionicPopup) {
+    .controller('LogoutCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http){
+        
+        function logout() {
+            
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.delete(base_url + '/authenticate/' + usuario._id, {headers: {'x-access-token': usuario.token}}).success(function (data) {
+                console.log(data)
+            }).error(function (err) {
+                console.log(err)
+            })
+        }
+        logout();
+    })
+.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http,$ionicPopup, ngFB, $cordovaOauth) {
     $scope.$parent.clearFabs();
     $scope.loginUser={};
     $scope.currentUser={};
@@ -95,7 +108,71 @@ angular.module('starter.controllers', [])
         $scope.$parent.hideHeader();
     }, 0);
     ionicMaterialInk.displayEffect();
+    $scope.loginFB=function () {
+        ngFB.login({scope: 'email,publish_actions'}).then(function (response) {
+            console.log(sessionStorage['fbAccessToken']);
+            if (response.status === 'connected') {
+                console.log('Facebook login succeeded');
+                ngFB.api({
+                    path: '/me',
+                    params: {fields: 'id,name,email'}
+                }).then(
+                    function (user) {
+                        var userFB = {
+                            id_facebook: user.id,
+                            username: user.name,
+                            mail: user.email,
+                            imageUrl: 'http://graph.facebook.com/'+user.id +'/picture?width=270&height=270',
+                            usuarioSocial: 'facebook'
+                        };
+                        $http.post(base_url + '/users', userFB).success(function (data){
+                            var session = {
+                                token: sessionStorage['fbAccessToken'],
+                                idFB:user.id,
+                                userid:data._id
+                            };
+                          
+                            $http.post(base_url + '/ionic/token',session).success(function (data) {
+                                console.log('Todo correcto y guardo el token');
+                                sessionStorage["user"]=JSON.stringify(session);
+                                $state.go('app.profile');
+                            }).error(function (err) {
+                                console.log(err)
+                            });
+                            
+                        }).error(function (data,err) {
+                            console.log(err);
+                            console.log(data[0]._id);
+                            var sessionEx = {
+                                token: sessionStorage['fbAccessToken'],
+                                idFB:user.id,
+                                userid:data[0]._id
+                            };
+                          
+                            $http.post(base_url + '/ionic/token',sessionEx).success(function (data) {
+                                console.log('Todo correcto y guardo el token');
+                                sessionStorage["user"]=JSON.stringify(sessionEx);
+                                $state.go('app.profile');
+                            }).error(function (err) {
+                                console.log(err)
+                            });
+                        });
+                        
+                       // $scope.user = userFB;
+                        
+                    },
+                    function (error) {
+                        alert('Facebook error: ' + error.error_description);
+                    });
+                
+                
+            } else {
+                alert('Facebook login failed');
+            }
+        });
+    };
     $scope.loginUser= function () {
+        
         if ($scope.loginUser.username!=undefined && $scope.loginUser.password!=undefined){
             $http.post(base_url+'/authenticate',{
                 username: $scope.loginUser.username,
@@ -119,7 +196,6 @@ angular.module('starter.controllers', [])
         }
     };
 })
-
     .controller("OauthExample", function($scope, $cordovaOauth) {
 
         $scope.googleLogin = function() {

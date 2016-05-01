@@ -2,7 +2,7 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}">
         <div class="hero slide-up" style="background-image: url('img/profile-bg.jpg');">
             <div class="content">
-                <div class="avatar" style="background-image: url('img/daenerys.jpg');"></div>
+                <div class="avatar" style="background-image: url({{currentUser.imageUrl}});"></div>
                 <h3><a class="light-border" >{{currentUser.username}}</a></h3>
                 <h4>{{currentUser.mail}}</h4>
             </div>
@@ -22,7 +22,7 @@
         <div class="list">
             <div class="list">
             <a class="item item-avatar item-icon-right" ng-repeat="user in users"  ng-click="selectUser(user)">
-                <img src="img/profile.png">
+                <img ng-src={{user.imageUrl}}>
                 <h2>{{ user.username }}</h2>
                 <p>{{ user.mail }}</p>
                 <i class="icon ion-chatbubble muted"></i>

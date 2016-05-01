@@ -16,7 +16,7 @@ angular.module('starter').controller('SignupCtrl', function($scope, $ionicModal,
             lastname: $scope.newUser.lastname,
             mail: $scope.newUser.mail
         }).success(function (data) {
-            $state.go('app.profile');
+            $state.go('app.login');
         }).error(function (err) {
             console.log(err);
             $ionicPopup.alert({
