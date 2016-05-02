@@ -90,10 +90,10 @@ angular.module('starter.controllers', ['ngOpenFB'])
     .controller('LogoutCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http){
         
         function logout() {
-            
             var usuario = JSON.parse(sessionStorage["user"]);
             $http.delete(base_url + '/authenticate/' + usuario._id, {headers: {'x-access-token': usuario.token}}).success(function (data) {
                 console.log(data)
+                $state.go('app.login');
             }).error(function (err) {
                 console.log(err)
             })

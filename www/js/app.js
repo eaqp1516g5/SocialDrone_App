@@ -125,7 +125,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/login.html',
                     controller: 'LogoutCtrl'
                 }
             }
