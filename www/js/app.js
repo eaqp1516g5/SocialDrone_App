@@ -44,15 +44,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             'menuContent': {
                 templateUrl: 'templates/activity.html',
                 controller: 'ActivityCtrl'
-            }/*,
+            },
             'fabContent': {
-                template: '<button id="fab-activity" ui-sref="app.createmsg" class="button button-fab button-fab-bottom-right expanded button-energized-900 flap"><i class="icon ion-paper-airplane"></i></button>',
-                controller: function ($timeout) {
-                    $timeout(function () {
-                        document.getElementById('fab-activity').classList.toggle('on');
-                    }, 200);
-                }
-            }*/
+                template: ''
+            }
         }
     })
         .state('app.createmsg', {
@@ -138,15 +133,43 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 controller: 'ProfileCtrl'
             },
             'fabContent': {
-                template: '<button id="fab-profile" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',
-                controller: function ($timeout) {
-                    /*$timeout(function () {
-                        document.getElementById('fab-profile').classList.toggle('on');
-                    }, 800);*/
-                }
+                template: ''
             }
         }
     })
+        .state('app.add', {
+            url: '/add',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/add.html',
+                    controller: 'addCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.addevent', {
+            url: '/addevent',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/addevent.html',
+                    controller: 'addeventCtrl'
+                }
+            },
+            'fabContent': {
+                template: ''
+            }
+        })
+        .state('app.showevents', {
+            url: '/showevents',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/showevents.html',
+                    controller: 'showeventCtrl'
+                }
+            }
+        })
         .state('app.signup', {
             url: '/signup',
             views: {

@@ -196,6 +196,226 @@ angular.module('starter.controllers', ['ngOpenFB'])
         }
     };
 })
+    .controller('addeventCtrl', function($scope, $cordovaGeolocation,$state, $http) {
+        var options = {timeout: 10000, enableHighAccuracy: true};
+        $scope.event={};
+        var marker;
+        $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            var mapOptions = {
+                center: latLng,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                google.maps.event.addListener($scope.map, 'click', function(event){
+                    if (marker==undefined) {
+                        placeMarker(event.latLng, $scope.map);
+                    }
+                    else{
+                        marker.setMap(null);
+                        placeMarker(event.latLng, $scope.map);
+                    }
+                });
+        }, function(error){
+            console.log("Could not get location");
+        });
+        function placeMarker(location, ma){
+            marker=new google.maps.Marker({
+                position: location,
+                map: ma
+            })
+            $scope.event.lat= location.lat();
+            $scope.event.long=location.lng();
+            sessionStorage["addevent"]=JSON.stringify($scope.event);
+            ma.panTo(location);
+
+        };
+        $scope.add=function(){
+            if(marker!=undefined)
+                $state.go('app.add');
+        }
+    })
+    .controller('showeventCtrl', function($scope, $cordovaGeolocation,$state, $http) {
+        var options = {timeout: 10000, enableHighAccuracy: true};
+        var base_url = "http://localhost:8080";
+        $scope.show={};
+        $scope.position={};
+        $scope.show.km=0;
+        $scope.markers=[];
+        var draw_circle;
+        var center = new google.maps.LatLng(51,-0.12);
+        var mapa;
+        var zoom = 8;
+        var marker;
+        var infoWindow;
+        $scope.initialize=function(){
+            var input = document.getElementById('search');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    window.alert("Autocomplete's returned place contains no geometry");
+                    return;
+                }
+                expandViewportToFitPlace(place);
+
+            });
+            function expandViewportToFitPlace(place) {
+                    $scope.createmap(place.geometry.location.lat(), place.geometry.location.lng());
+            }
+
+
+        };
+        var createMarker = function (info){
+
+            marker = new google.maps.Marker({
+                map: $scope.map,
+                position: new google.maps.LatLng(info.lat, info.long),
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            });
+            (function(marker, info){
+                google.maps.event.addListener(marker, 'click', function() {
+                    if(!infoWindow){
+                        infoWindow=new google.maps.InfoWindow;
+                    }
+                    infoWindow.setContent('<h5>' + "Event name: "+ info.name+'</h5>'+'<h5>'+"Day: "+ info.day+'</h5>'+ '<h5>'+"Hour: "+ info.hour+'</h5>'+'<div align="center">'+'<button class="button button-small button-positive">See event</button>' +'</div>');
+                    infoWindow.open($scope.map,marker);
+                });
+            })(marker, info);
+
+            $scope.markers.push(marker);
+
+        }
+        $scope.openInfoWindow = function(e, selectedMarker){
+            e.preventDefault();
+            google.maps.event.trigger(selectedMarker, 'click');
+        }
+        function setMapOnAll(map) {
+            for (var i = 0; i < $scope.markers.length; i++) {
+                $scope.markers[i].setMap(map);
+            }
+        }
+        $scope.initialize();
+        $scope.createmap= function (lat, long) {
+            $scope.position= new google.maps.LatLng(lat,long);
+            var mapOptions = {
+                center: new google.maps.LatLng(lat,long),
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            $scope.map = new google.maps.Map(document.getElementById("mapa"), mapOptions);
+            var mark=new google.maps.Marker({
+                position: new google.maps.LatLng(lat,long),
+                map: $scope.map
+            })
+        }
+        $scope.mylocation=function() {
+            $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+                $scope.createmap(position.coords.latitude, position.coords.longitude);
+            }, function (error) {
+                console.log("Could not get location");
+            });
+        }
+        $scope.search =function(){
+            if(marker!=undefined){
+                setMapOnAll(null);
+                draw_circle.setMap(null);
+            }
+            draw_circle = new google.maps.Circle({
+                center: $scope.position,
+                radius: $scope.show.km*1000,
+                strokeColor: "#1E90FF",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#00BFFF",
+                fillOpacity: 0.35,
+                map: $scope.map
+            });
+            var pointA = $scope.position;
+            var pointB = pointA.destinationPoint(0, $scope.show.km);
+            var pointC = pointA.destinationPoint(90, $scope.show.km);
+            var pointD = pointA.destinationPoint(180, $scope.show.km);
+            var pointE = pointA.destinationPoint(270, $scope.show.km);
+            $http.post(base_url + "/events", {
+                    lat1: pointB.lat(),
+                    lat2: pointD.lat(),
+                    lng1: pointC.lng(),
+                    lng2: pointE.lng()
+                })
+                .success(function (data, status, headers, config) {
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++){
+                        createMarker(data[i]);
+                    }
+                })
+                .error(function (error, status, headers, config) {
+                    console.log(error);
+                });
+        };
+        Number.prototype.toRad = function() {
+            return this * Math.PI / 180;
+        }
+
+        Number.prototype.toDeg = function() {
+            return this * 180 / Math.PI;
+        }
+
+        google.maps.LatLng.prototype.destinationPoint = function(brng, dist) {
+            dist = dist / 6371;
+            brng = brng.toRad();
+
+            var lat1 = this.lat().toRad(), lon1 = this.lng().toRad();
+
+            var lat2 = Math.asin(Math.sin(lat1) * Math.cos(dist) +
+                Math.cos(lat1) * Math.sin(dist) * Math.cos(brng));
+
+            var lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(dist) *
+                    Math.cos(lat1),
+                    Math.cos(dist) - Math.sin(lat1) *
+                    Math.sin(lat2));
+
+            if (isNaN(lat2) || isNaN(lon2)) return null;
+
+            return new google.maps.LatLng(lat2.toDeg(), lon2.toDeg());
+        }
+
+
+    })
+    .controller('addCtrl', function($scope, $cordovaGeolocation,$state, $http) {
+        var options = {timeout: 10000, enableHighAccuracy: true};
+        $scope.event={};
+        var a= new Date();
+        var d = new Date(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes());
+        $scope.time = d;
+        var marker;
+        var coord = JSON.parse(sessionStorage["addevent"]);
+        $scope.event.lat=coord.lat;
+        $scope.event.long=coord.long;
+        $scope.sendEvent=function(y){
+            if ($scope.event.name!=undefined && $scope.event.description!=undefined && $scope.event.lat!=undefined &&$scope.event.long!=undefined){
+                $http.post(base_url+'/event',{
+                    name: $scope.event.name,
+                    description: $scope.event.description,
+                    lat: $scope.event.lat,
+                    long: $scope.event.long,
+                    Date: y,
+                    hour: ("0" + y.getHours()).slice(-2) + ":" + ("0"+y.getMinutes()).slice(-2),
+                }).success(function (data) {
+                    console.log(data);
+                    $state.go('app.profile');
+                }).error(function (error, status, headers, config) {
+                    console.log(error);
+                });
+            }
+        };
+        $scope.cancel=function(){
+            $state.go('app.profile');
+        };
+    })
     .controller("OauthExample", function($scope, $cordovaOauth) {
 
         $scope.googleLogin = function() {

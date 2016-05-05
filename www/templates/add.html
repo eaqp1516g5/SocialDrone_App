@@ -1,0 +1,25 @@
+<ion-view view-title="Add the event">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <label class="item item-input">
+            <span class="input-label" >Event name: </span>
+            <input type="text" ng-model="event.name">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Description: </span>
+            <input type="text"  ng-model="event.description">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Date: </span>
+            <input type="date" name="date" ng-model="time">
+        </label>
+        <label class="item item-input">
+            <span class="input-label" >Hour: </span>
+            <input type="time" name="time" id="d" ng-model="time">
+        </label>
+        <div class="padding"></div>
+        <div align="center">
+            <button ng-click="sendEvent(time)" class="button button-bar-calm">Add</button>
+            <button ng-click="cancel()" class="button button-bar-assertive">Cancel</button>
+        </div>
+    </ion-content>
+</ion-view>
