@@ -320,9 +320,12 @@ angular.module('starter.controllers', ['ngOpenFB'])
                 console.log("Could not get location");
             });
         }
-        $scope.search =function(){
-            if(marker!=undefined){
+        $scope.search =function() {
+            if (marker != undefined) {
                 setMapOnAll(null);
+                draw_circle.setMap(null);
+            }
+            if (draw_circle!=undefined){
                 draw_circle.setMap(null);
             }
             draw_circle = new google.maps.Circle({
@@ -335,16 +338,10 @@ angular.module('starter.controllers', ['ngOpenFB'])
                 fillOpacity: 0.35,
                 map: $scope.map
             });
-            var pointA = $scope.position;
-            var pointB = pointA.destinationPoint(0, $scope.show.km);
-            var pointC = pointA.destinationPoint(90, $scope.show.km);
-            var pointD = pointA.destinationPoint(180, $scope.show.km);
-            var pointE = pointA.destinationPoint(270, $scope.show.km);
             $http.post(base_url + "/events", {
-                    lat1: pointB.lat(),
-                    lat2: pointD.lat(),
-                    lng1: pointC.lng(),
-                    lng2: pointE.lng()
+                    lat: $scope.position.lat(),
+                    lng: $scope.position.lng(),
+                    radius: $scope.show.km
                 })
                 .success(function (data, status, headers, config) {
                     console.log(data);

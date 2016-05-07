@@ -2,17 +2,17 @@
     <ion-content ng-class="{expanded:isExpanded}">
         <ion-item>
             <div align="center">
-                <button ng-click="mylocation()" class="button button-full button-assertive-900">Your location</button>
+                <button ng-click="mylocation()" class="button button-full button-energized">Your location</button>
             </div>
         </ion-item>
         <label class="item item-input">
             <span class="input-label">OR</span>
             <input id="search" type="text" ng-model="event.name">
         </label>
-        <label class="item item-input">
-            <span class="input-label">Distance in Km: </span>
-            <input type="number" name="date" ng-model="show.km">
-        </label>
+            <div class="item range">
+                <span class="input-label">Distance in Km: </span>
+                <input type="range" min="0" max="200" ng-model="show.km">{{show.km}}
+            </div>
         <ion-item>
             <div align="center">
                 <button ng-click="search()" class="button button-full button-energized">Search <i class="ion-search"></i></button>
