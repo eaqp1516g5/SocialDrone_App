@@ -1,0 +1,39 @@
+<ion-view view-title="Event">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <label class="item">
+            <div class="card stable-bg ink ink-dark">
+                <div class="item item-text-wrap">
+            <h2>Name: {{object.name}}</h2>
+                    <br>
+            <h3>Description: {{object.description}}</h3>
+                    <br>
+            <h3>Created by: {{object.createdby.username}}</h3>
+                    <br>
+            <h3>Day: {{object.day}}</h3>
+                    <br>
+            <h3>Hour: {{object.hour}}</h3>
+                    <br>
+            <h3>Person goes to event: {{object.go.length}}</h3>
+                    <div ng-if="object.createdby._id!=user.userid">
+                    <div align="center" ng-if="user._id">
+                        <div ng-if="show.id==undefined">
+                            <button ng-click="goto();" class="button button-full button-positive"><i class="ion-plus-circled"></i>Assist</button>
+                        </div>
+                        <div ng-if="show.id!=undefined">
+                        <button ng-click="dontgoto();" class="button button-full button-assertive"><i class="ion-minus-circled"></i>I don't assist</button>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            <div class="list">
+                <h2>People who go to the event</h2>
+                <a class="item item-avatar item-icon-right" ng-repeat="user in go"  ng-click="selectUser(user)">
+                    <img ng-src={{user.imageUrl}}>
+                    <h2>{{ user.username }}</h2>
+                    <p>{{ user.mail }}</p>
+                </a>
+            </div>
+        </label>
+    </ion-content>
+</ion-view>

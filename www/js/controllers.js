@@ -238,13 +238,14 @@ angular.module('starter.controllers', ['ngOpenFB'])
                 $state.go('app.add');
         }
     })
-    .controller('showeventCtrl', function($scope, $cordovaGeolocation,$state, $http) {
+    .controller('showeventCtrl', function($scope, $cordovaGeolocation,$state, $http, $compile) {
         var options = {timeout: 10000, enableHighAccuracy: true};
         var base_url = "http://localhost:8080";
         $scope.show={};
         $scope.position={};
         $scope.show.km=0;
         $scope.markers=[];
+        $scope.id={};
         var draw_circle;
         var center = new google.maps.LatLng(51,-0.12);
         var mapa;
@@ -281,7 +282,9 @@ angular.module('starter.controllers', ['ngOpenFB'])
                     if(!infoWindow){
                         infoWindow=new google.maps.InfoWindow;
                     }
-                    infoWindow.setContent('<h5>' + "Event name: "+ info.name+'</h5>'+'<h5>'+"Day: "+ info.day+'</h5>'+ '<h5>'+"Hour: "+ info.hour+'</h5>'+'<div align="center">'+'<button class="button button-small button-positive">See event</button>' +'</div>');
+                    $scope.id=info._id;
+                    var content= $compile('<button class="button button-clear button-positive" ng-click="see()">See event</button>')($scope);
+                    infoWindow.setContent(content[0]);
                     infoWindow.open($scope.map,marker);
                 });
             })(marker, info);
@@ -289,6 +292,20 @@ angular.module('starter.controllers', ['ngOpenFB'])
             $scope.markers.push(marker);
 
         }
+        $scope.see=function() {
+            console.log($scope.id);
+            $http.get(base_url + "/event/" + $scope.id)
+                .success(function (data, status, headers, config) {
+                    console.log("hola a todos me largo");
+                    console.log(data);
+                    sessionStorage["eventoid"]=JSON.stringify(data);
+                    console.log( sessionStorage["eventoid"]);
+                    $state.go('app.event');
+                })
+                .error(function (error, status, headers, config) {
+                    console.log(error);
+                });
+        };
         $scope.openInfoWindow = function(e, selectedMarker){
             e.preventDefault();
             google.maps.event.trigger(selectedMarker, 'click');
@@ -362,29 +379,127 @@ angular.module('starter.controllers', ['ngOpenFB'])
         var d = new Date(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes());
         $scope.time = d;
         var marker;
+        $scope.user={};
+        $scope.getuser=function(){
+            if(sessionStorage["user"]!=undefined){
+                $scope.user=JSON.parse(sessionStorage["user"]);
+            }
+        };
+        $scope.getuser();
         var coord = JSON.parse(sessionStorage["addevent"]);
         $scope.event.lat=coord.lat;
         $scope.event.long=coord.long;
-        $scope.sendEvent=function(y){
-            if ($scope.event.name!=undefined && $scope.event.description!=undefined && $scope.event.lat!=undefined &&$scope.event.long!=undefined){
-                $http.post(base_url+'/event',{
-                    name: $scope.event.name,
-                    description: $scope.event.description,
-                    lat: $scope.event.lat,
-                    long: $scope.event.long,
-                    Date: y,
-                    hour: ("0" + y.getHours()).slice(-2) + ":" + ("0"+y.getMinutes()).slice(-2),
-                }).success(function (data) {
-                    console.log(data);
-                    $state.go('app.profile');
-                }).error(function (error, status, headers, config) {
-                    console.log(error);
-                });
+        $scope.sendEvent=function(y) {
+            {
+                {
+                    if (sessionStorage["user"] != undefined)
+                        if ($scope.event.name != undefined && $scope.event.description != undefined && $scope.event.lat != undefined && $scope.event.long != undefined) {
+                            $http.post(base_url + '/event', {
+                                name: $scope.event.name,
+                                description: $scope.event.description,
+                                lat: $scope.event.lat,
+                                long: $scope.event.long,
+                                Date: y,
+                                token: $scope.user.token,
+                                userid: $scope.user.userid,
+                                hour: ("0" + y.getHours()).slice(-2) + ":" + ("0" + y.getMinutes()).slice(-2),
+                                location: [$scope.event.long, $scope.event.lat]
+                            }).success(function (data) {
+                                console.log(data);
+                                sessionStorage["eventoid"] = JSON.stringify(data);
+                                $state.go('app.event');
+                            }).error(function (error, status, headers, config) {
+                                console.log(error);
+                            });
+                        }
+                }
+            }};
+            $scope.cancel = function () {
+                $state.go('app.profile');
+            };
+        })
+    .controller('eventCtrl', function($scope, $cordovaGeolocation,$state, $http) {
+        var base_url = "http://localhost:8080";
+        $scope.object={};
+        $scope.show={};
+        $scope.user={};
+        $scope.go={};
+        $scope.getobject=function(){
+            console.log(sessionStorage["eventoid"]);
+            if(sessionStorage["eventoid"]!=undefined){
+                if(sessionStorage["user"]!=undefined){
+                    $scope.user=JSON.parse(sessionStorage["user"]);
+                }
+                var object =JSON.parse(sessionStorage["eventoid"]);
+                $http.get(base_url + '/event/' + object._id)
+                    .success(function (data) {
+                        console.log(data);
+                        $scope.object=data;
+                        for(var i = 0; i<data.go.length; i++){
+                            if($scope.user!={}){
+                                console.log(data.go[i]);
+                                if($scope.user.userid==data.go[i]){
+                                    $scope.show.id=data.go[i];
+                                    console.log("esta");
+                                }
+                            }
+                        }
+                        $http.get(base_url+'/eve/'+object._id
+                        ).success(function (data) {
+                            $scope.go=data;
+                        }).error(function (error, status, headers, config) {
+                            console.log(error);
+                        });
+                    })
+                    .error(function (err) {
+                        console.log('Oh, something wrong');
+                    });
             }
+            else $state.go('app.profile');
+        }
+        $scope.getobject();
+        $scope.goto=function(){
+            $http.post(base_url+'/event/'+$scope.object._id,{
+                token:  $scope.user.token,
+                userid:  $scope.user.userid
+            }).success(function (data) {
+                console.log(data);
+                if(data!="No tengo tokencito"){
+                    $scope.object=data;
+                    sessionStorage["eventoid"]=JSON.stringify(data);
+                    $scope.show.id=$scope.user.userid;
+                    $http.get(base_url+'/eve/'+$scope.object._id
+                    ).success(function (data) {
+                        $scope.go=data;
+                    }).error(function (error, status, headers, config) {
+                        console.log(error);
+                    });
+                }else console.log(data);
+            }).error(function (error, status, headers, config) {
+                console.log(error);
+            });
         };
-        $scope.cancel=function(){
-            $state.go('app.profile');
-        };
+        $scope.dontgoto=function(){
+            $http.post(base_url+'/goto/delete/'+$scope.object._id,{
+                token:  $scope.user.token,
+                userid:  $scope.user.userid
+            }).success(function (data) {
+                console.log(data);
+                if(data!="No tengo tokencito"){
+                    sessionStorage["eventoid"]=JSON.stringify(data);
+                    $scope.object=data;
+                    $scope.show.id=undefined;
+                    $http.get(base_url+'/eve/'+$scope.object._id
+                    ).success(function (data) {
+                        $scope.go=data;
+                    }).error(function (error, status, headers, config) {
+                        console.log(error);
+                    });
+                }else console.log(data);
+            }).error(function (error, status, headers, config) {
+                console.log(error);
+            });
+        }
     })
     .controller("OauthExample", function($scope, $cordovaOauth) {
 

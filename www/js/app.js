@@ -170,6 +170,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 }
             }
         })
+        .state('app.event', {
+            url: '/event',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event.html',
+                    controller: 'eventCtrl'
+                }
+            }
+        })
         .state('app.signup', {
             url: '/signup',
             views: {
@@ -181,8 +190,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                     template: ''
                 }
             }
-        })
-    ;
+        });
     
 
 
