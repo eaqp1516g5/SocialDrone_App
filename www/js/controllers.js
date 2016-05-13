@@ -2,7 +2,7 @@
 'use strict';
 var base_url = "http://localhost:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
+.controller('AppCtrl', function($scope,$http, $ionicModal, $ionicPopover, $timeout) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -28,6 +28,24 @@ angular.module('starter.controllers', ['ngOpenFB'])
 
     $scope.showNavBar = function() {
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'block';
+        var usuario = JSON.parse(sessionStorage["user"]);
+        $http.get(base_url+'/users/'+usuario.userid, {headers: {'x-access-token': usuario.token}}).success(function (data) {
+            $scope.userFoto=data.imageUrl;
+            $scope.userName=data.username;
+            $scope.userMail=data.mail;
+            $http.get(base_url+'/following/'+usuario.userid).success(function (data) {
+                console.log('Numero de following'+data.length);
+                $scope.numFollowing = data.length;
+                $http.get(base_url+'/followers/'+usuario.userid).success(function (data) {
+                    console.log('Numero de followers'+data.length);
+                    $scope.numFollowers = data.length;
+            }).error(function (err) {
+                console.log(err)
+            })
+        }).error(function (err) {
+            console.log(err)
+        })
+    });
     };
 
     $scope.noHeader = function() {
@@ -133,7 +151,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
                             };
                           
                             $http.post(base_url + '/ionic/token',session).success(function (data) {
-                                console.log('Todo correcto y guardo el token');
                                 sessionStorage["user"]=JSON.stringify(session);
                                 $state.go('app.profile');
                             }).error(function (err) {
@@ -291,7 +308,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 
             $scope.markers.push(marker);
 
-        }
+        };
         $scope.see=function() {
             console.log($scope.id);
             $http.get(base_url + "/event/" + $scope.id)
@@ -309,7 +326,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
         $scope.openInfoWindow = function(e, selectedMarker){
             e.preventDefault();
             google.maps.event.trigger(selectedMarker, 'click');
-        }
+        };
         function setMapOnAll(map) {
             for (var i = 0; i < $scope.markers.length; i++) {
                 $scope.markers[i].setMap(map);

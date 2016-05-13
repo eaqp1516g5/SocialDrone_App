@@ -13,8 +13,8 @@
     </ion-side-menu-content>
     <ion-side-menu side="right">
         <ion-header-bar class="dark-bg expanded">
-            <span class="avatar" style="background: url('img/crown.jpg'); background-size: cover;"></span>
-            <h2>Thronester</h2>
+            <span ng-if="userFoto" class="avatar" style="background: url({{userFoto}}); background-size: cover;"></span>
+            <h2>{{userName}}</h2>
         </ion-header-bar>
         <ion-content class="stable-bg has-expanded-header">
             <ion-list>

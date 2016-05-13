@@ -31,7 +31,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
     $ionicConfigProvider.backButton.previousTitleText(false);
     */
 
-    $stateProvider.state('app', {
+    $stateProvider.
+
+    state('app', {
         url: '/app',
         abstract: true,
         templateUrl: 'templates/menu.html',

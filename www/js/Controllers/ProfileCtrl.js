@@ -7,9 +7,9 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
     $scope.myUser={};
     $scope.us={};
     $scope.currentUser={};
+    $scope.messages={};
 
-
-    function getUser() {
+   /* function getUser() {
         console.log(sessionStorage["user"]);
         if (sessionStorage["user"] != undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
@@ -18,23 +18,20 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
                 .success(function (data) {
                     $scope.currentUser=data;
                     console.log($scope.currentUser.imageUrl);
-                    
                 })
                 .error(function (err) {
                 });
         }
     }
-    getUser();
-    function getUsers() {
-        console.log('Lleho');
+    getUser();*/
+    /*function getUsers() {
         if(sessionStorage["user"]!=undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
             $http.get(base_url + '/users',  {headers: {'x-access-token': usuario.token}})
                 .success(function (data) {
-                    console.log(data);
                     $scope.users = data;
                     $scope.currentUser=usuario;
-                    console.log($scope.currentUser);
+
 
                 })
                 .error(function (err) {
@@ -42,7 +39,25 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
                 });
         }
     }
-    getUsers();
+    getUsers();*/
+
+    $scope.following= function () {
+        console.log('following');
+    };
+    $scope.followers= function () {
+        console.log('followers');
+    };
+    function getMyMessages (){
+        if (sessionStorage["user"] != undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.get(base_url+'/message/user/'+usuario.userid).success(function (data) {
+                $scope.messages=data;
+            }).error(function (err) {
+                console.log(err)
+            });
+        }
+    }
+    getMyMessages();
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = false;
@@ -56,11 +71,9 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
         });
     }, 300);
 
-    $timeout(function() {
-        ionicMaterialMotion.fadeSlideInRight({
-            startVelocity: 3000
-        });
-    }, 700);
+    $timeout(function () {
+        ionicMaterialMotion.fadeSlideInRight();
+    }, 300);
 
     // Set Ink
     ionicMaterialInk.displayEffect();
