@@ -37,7 +37,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
                 console.log('Numero de following'+data.length);
                 $scope.numFollowing = data.length;
                 $http.get(base_url+'/followers/'+usuario.userid).success(function (data) {
-                    console.log('Numero de followers'+data.length);
                     $scope.numFollowers = data.length;
             }).error(function (err) {
                 console.log(err)

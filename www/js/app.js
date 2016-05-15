@@ -52,6 +52,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         }
     })
+        .state('app.usersearch', {
+            url: '/usersearch',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/usersearch.html',
+                    controller: 'usersearchCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.createmsg', {
             url: '/createmsg',
             views: {
@@ -78,10 +90,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 controller: 'FriendsCtrl'
             },
             'fabContent': {
-                template: '<button id="fab-friends" class="button button-fab button-fab-top-left expanded button-energized-900 spin"><i class="icon ion-chatbubbles"></i></button>',
+                template: '',
                 controller: function ($timeout) {
                     $timeout(function () {
-                        document.getElementById('fab-friends').classList.toggle('on');
                     }, 900);
                 }
             }
@@ -148,6 +159,71 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 },
                 'fabContent': {
                     template: ''
+                }
+            }
+        })
+        .state('app.following', {
+            url: '/following',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/following.html',
+                    controller: 'FollowingCtrl'
+                },
+                'fabContent': {
+                    template: '<button id="fab-friends" class="button button-fab button-fab-top-left expanded button-energized-900 spin"><i class="icon ion-chatbubbles"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-friends').classList.toggle('on');
+                        }, 900);
+                    }
+                }
+            }
+        })
+        .state('app.followingSearch', {
+            url: '/followingSearch',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/followingSearch.html',
+                    controller: 'FollsearchCtrl'
+                },
+                'fabContent': {
+                    template: '',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                        }, 900);
+                    }
+                }
+            }
+        })
+        .state('app.followerSearch', {
+            url: '/followerSearch',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/followerSearch.html',
+                    controller: 'FollowerSearchCtrl'
+                },
+                'fabContent': {
+                    template: '',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                        }, 900);
+                    }
+                }
+            }
+        })
+        .state('app.followers', {
+            url: '/followers',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/follower.html',
+                    controller: 'FollowerCtrl'
+                },
+                'fabContent': {
+                    template: '',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                        }, 900);
+                    }
                 }
             }
         })

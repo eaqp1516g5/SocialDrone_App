@@ -1,0 +1,12 @@
+<ion-view view-title="Followers {{usersearched}}">
+    <ion-content ng-class="{expanded:isExpanded}">
+
+        <div class="list">
+            <a class="item item-avatar item-icon-right" ng-repeat="follower in Followers" ng-click="userprofile(follower.username)">
+                <img ng-src={{follower.imageUrl}}>
+                <h2>{{ follower.username }}</h2>
+                <p>{{ follower.mail }}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

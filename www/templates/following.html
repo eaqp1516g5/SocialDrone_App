@@ -1,0 +1,13 @@
+<ion-view view-title="Following">
+    <ion-content ng-class="{expanded:isExpanded}">
+
+                    <div class="list">
+                    <a class="item item-avatar item-icon-right" ng-repeat="following in Followings" ng-click="userprofile(following.username)">
+                        <img ng-src={{following.imageUrl}}>
+                        <h2>{{ following.username }}</h2>
+                        <p>{{ following.mail }}</p>
+                        <i class="icon ion-close-circled muted" ng-click="unfollow(following.username)"></i>
+                     </a>
+                    </div>
+    </ion-content>
+</ion-view>

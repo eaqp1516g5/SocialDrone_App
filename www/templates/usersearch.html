@@ -1,22 +1,11 @@
-<ion-view view-title="Profile">
+<ion-view view-title="{{userSearched}}">
     <ion-content ng-class="{expanded:$scope.isExpanded}">
         <div class="hero slide-up" style="background-image: url('img/profile-bg.jpg');">
             <div class="content">
-                <div class="avatar" style="background-image: url({{userFoto}});"></div>
-                <h3><a class="light-border" >{{userName}}</a></h3>
-                <h4>{{userMail}}</h4>
+                <div class="avatar" style="background-image: url({{usersearchedImageUrl}});"></div>
+                <h3><a class="light-border" >{{userSearched}}</a></h3>
+                <h4>{{usersearchedMail}}</h4>
             </div>
-        </div>
-        <div class="tabs tabs-dark tabs-icon-top static">
-            <a ui-sref="app.activity" class="tab-item">
-                <i class="icon ion-arrow-graph-up-right"></i> Activity
-            </a>
-            <a ui-sref="app.friends" class="tab-item">
-                <i class="icon ion-android-people"></i> Friends
-            </a>
-            <a ui-sref="app.gallery" class="tab-item">
-                <i class="icon ion-images"></i> Photos
-            </a>
         </div>
         <br>
         <div>
@@ -32,8 +21,8 @@
             <div class="item card-item">
                 <div class="card stable-bg ink ink-dark">
                     <div class="item item-avatar item-text-wrap">
-                        <span class="avatar" style="background-image: url({{userFoto}});"></span>
-                        <strong>{{userName}}</strong> says "{{msg.text}}"
+                        <span class="avatar" style="background-image: url({{usersearchedImageUrl}});"></span>
+                        <strong>{{userSearched}}</strong> says "{{msg.text}}"
                     </div>
                     <div class="card-footer text-right padding">
                         <i class="icon ion-chatbubble positive"></i>{{msg.comment.length}}

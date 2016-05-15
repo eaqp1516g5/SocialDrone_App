@@ -2,7 +2,7 @@
  * Created by bernat on 17/04/16.
  */
 
-angular.module('starter').controller('ProfileCtrl', function($scope, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup) {
+angular.module('starter').controller('ProfileCtrl', function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup) {
     $scope.users={};
     $scope.myUser={};
     $scope.us={};
@@ -41,11 +41,13 @@ angular.module('starter').controller('ProfileCtrl', function($scope, $stateParam
     }
     getUsers();*/
 
-    $scope.following= function () {
-        console.log('following');
+    $scope.following= function (numFollowing) {
+        if(numFollowing!=0)
+        $state.go("app.following");
     };
-    $scope.followers= function () {
-        console.log('followers');
+    $scope.followers= function (numFollowers) {
+        if(numFollowers!=0)
+         $state.go("app.followers");
     };
     function getMyMessages (){
         if (sessionStorage["user"] != undefined) {
