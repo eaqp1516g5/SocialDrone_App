@@ -2,7 +2,7 @@
 'use strict';
 var base_url = "http://localhost:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
-.controller('AppCtrl', function($scope,$http, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar) {
+.controller('AppCtrl', function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -10,7 +10,9 @@ angular.module('starter.controllers', ['ngOpenFB'])
     $scope.usuar = {};
     $scope.hasHeaderFabRight = false;
 
-
+$scope.search=function(){
+    $state.go('app.search');
+}
 
         var navIcons = document.getElementsByClassName('ion-navicon');
         for (var i = 0; i < navIcons.length; i++) {
