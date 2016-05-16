@@ -7,6 +7,14 @@
                 <h4>{{usersearchedMail}}</h4>
             </div>
         </div>
+        <div ng-if="!myself" class="tabs tabs-dark tabs-icon-top static">
+            <a ng-if="nolosigues" class="tab-item">
+                <i  ng-click="letfollow()" class="icon ion-person-add"></i> Follow
+            </a>
+            <a ng-if="!nolosigues" class="tab-item">
+                <i ng-click="letunfollow()" class="icon ion-close-circled"></i> Unfollow
+            </a>
+        </div>
         <br>
         <div>
             <div class="item">
