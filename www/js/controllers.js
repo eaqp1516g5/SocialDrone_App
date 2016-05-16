@@ -258,7 +258,7 @@ $scope.search=function(){
     })
     .controller('showeventCtrl', function($scope, $cordovaGeolocation,$state, $http, $compile) {
         var options = {timeout: 10000, enableHighAccuracy: true};
-        var base_url = "http://localhost:8080";
+        //var base_url = "http://192.168.0.30:8080";
         $scope.show={};
         $scope.position={};
         $scope.show.km=0;
@@ -437,7 +437,7 @@ $scope.search=function(){
             };
         })
     .controller('eventCtrl', function($scope, $cordovaGeolocation,$state, $http) {
-        var base_url = "http://localhost:8080";
+       // var base_url = "http://localhost:8080";
         $scope.object={};
         $scope.show={};
         $scope.user={};
