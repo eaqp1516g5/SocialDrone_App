@@ -110,12 +110,26 @@ $scope.search=function(){
         
         function logout() {
             var usuario = JSON.parse(sessionStorage["user"]);
-            $http.delete(base_url + '/authenticate/' + usuario._id, {headers: {'x-access-token': usuario.token}}).success(function (data) {
-                console.log(data)
+            console.log(usuario._id);
+            if(usuario._id!=undefined){
+                $http.delete(base_url + '/authenticate/' + usuario._id, {headers: {'x-access-token': usuario.token}}).success(function (data) {
+                console.log(data);
                 $state.go('app.login');
             }).error(function (err) {
                 console.log(err)
             })
+            }
+            else{
+                console.log(usuario);
+                $http({
+                    method: 'DELETE',
+                    url: base_url + '/authenticate/' + usuario.idFB,
+                    data: {flag: true},
+                    headers: {'Content-Type': 'application/json','x-access-token': usuario.token}
+                }).success(function (data) {
+                    $state.go('app.login');
+                })
+            }
         }
         logout();
     })
