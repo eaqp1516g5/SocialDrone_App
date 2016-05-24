@@ -2,7 +2,7 @@
  * Created by bernat on 17/04/16.
  */
 
-angular.module('starter').controller('SignupCtrl', function($scope, $ionicModal, $ionicPopover,ionicMaterialInk, $timeout, $http,$ionicPopup, $state, $cordovaCamera) {
+angular.module('starter').controller('SignupCtrl',function($scope, $ionicModal, $ionicPopover,ionicMaterialInk, $timeout, $http,$ionicPopup, $state, $cordovaCamera, $cordovaFileTransfer) {
     $scope.picture;
     $scope.newUser = {};
     $timeout(function() {
@@ -33,14 +33,15 @@ angular.module('starter').controller('SignupCtrl', function($scope, $ionicModal,
     }
     $scope.crearUser = function () {
         console.log($scope.newUser);
-        $http.post(base_url + '/users', {
-            username: $scope.newUser.username,
-            password: $scope.newUser.password,
-            name: $scope.newUser.name,
-            lastname: $scope.newUser.lastname,
-            mail: $scope.newUser.mail,
-            imageUrl: $scope.picture
-        }).success(function (data) {
+        var UsarioLocalNuevo = new FormData();
+        UsarioLocalNuevo.append('username', $scope.newUser.username);
+        UsarioLocalNuevo.append('password', $scope.newUser.password);
+        UsarioLocalNuevo.append('name', $scope.newUser.name);
+        UsarioLocalNuevo.append('lastname', $scope.newUser.lastname);
+        UsarioLocalNuevo.append('mail', $scope.newUser.mail);
+        UsarioLocalNuevo.append('imageUrl', $('#imgInp')[0].files[0]);
+        $http.post(base_url + '/users',UsarioLocalNuevo)
+            .success(function (data) {
             $state.go('app.login');
         }).error(function (err) {
             console.log(err);
@@ -50,6 +51,26 @@ angular.module('starter').controller('SignupCtrl', function($scope, $ionicModal,
             });
 
         });
+    }
+    $scope.User = function () {
+        var options ={
+        fileKey: "file",
+        fileName: 'filename.jpg',
+        mimeType: 'image/jpeg',
+        chunkedMode:false,
+        params: { username: $scope.newUser.username,
+            password: $scope.newUser.password,
+            name: $scope.newUser.name,
+            lastname: $scope.newUser.lastname,
+            mail: $scope.newUser.mail}
+        };
+        $cordovaFileTransfer.upload(base_url+'/user_movil',$scope.picture,options);
+        function success (data){
+
+        }
+        function error(data){
+
+        }
     }
     
     
