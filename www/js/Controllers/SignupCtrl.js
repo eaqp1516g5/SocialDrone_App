@@ -64,13 +64,16 @@ angular.module('starter').controller('SignupCtrl',function($scope, $ionicModal, 
             lastname: $scope.newUser.lastname,
             mail: $scope.newUser.mail}
         };
-        $cordovaFileTransfer.upload(base_url+'/user_movil',$scope.picture,options);
-        function success (data){
-
-        }
-        function error(data){
-
-        }
+        $cordovaFileTransfer.upload(base_url+'/user_movil',$scope.picture,options).then(
+        function (data){
+            $state.go('app.login');
+        }, function (err){
+            console.log(err);
+            $ionicPopup.alert({
+                title: 'Fill the fields correctly ',
+                content: err
+            });
+        });
     }
     
     
