@@ -1,6 +1,6 @@
 /* global angular, document, window */
 'use strict';
-var base_url = "http://localhost:8080";
+var base_url = "http://10.192.235.163:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
 .controller('AppCtrl', function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar) {
     // Form data for the login modal
