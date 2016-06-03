@@ -164,7 +164,7 @@ $scope.search=function(){
                                 idFB:user.id,
                                 userid:data._id
                             };
-                          
+
                             $http.post(base_url + '/ionic/token',session).success(function (data) {
                                 sessionStorage["user"]=JSON.stringify(session);
                                 $state.go('app.profile');
@@ -563,7 +563,7 @@ $scope.search=function(){
     ionicMaterialInk.displayEffect();
 })
     
-.controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
+.controller('ActivityCtrl', function($scope,$ionicModal,$ionicPopup, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = true;
@@ -576,11 +576,22 @@ $scope.search=function(){
     $scope.newMessage = {};
     $scope.usuar = {};
     $scope.ed={};
+    $scope.Newcomment={};
     $scope.editando = function(se){
         sessionStorage["msg"]=JSON.stringify(se);
         $state.go('app.createmsg');
     };
 
+    $scope.doRefresh = function() {
+        $http.get(base_url + "/message")
+            .success(function (newItems) {
+                $scope.items = newItems;
+            })
+            .finally(function () {
+                // Stop the ion-refresher from spinning
+                $scope.$broadcast('scroll.refreshComplete');
+            });
+    }
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
             selector: '.animate-fade-slide-in .item'
@@ -596,6 +607,12 @@ $scope.search=function(){
                 console.log(error);
             });
     };
+    $scope.showcomments= function (num,id) {
+        sessionStorage["viewcomment"]=id;
+        if(num!=0){
+            $state.go('app.comment');
+        }
+    };
     $scope.borrarMensaje = function (id) {
         if(sessionStorage["user"]!=undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
@@ -607,6 +624,48 @@ $scope.search=function(){
                     console.log(err);
                 });
         }
+    };
+
+    $scope.openModal = function(id) {
+        sessionStorage["comment"]=id;
+        $ionicModal.fromTemplateUrl('my-modal.html', {
+            scope: $scope,
+            animation: 'fade-in-scale'
+        }).then(function(modal) {
+            $scope.modal = modal;
+            $scope.modal.show();
+        });
+    };
+
+    $scope.postcomment = function() {
+        var msg_id= sessionStorage["comment"];
+        var usuario = JSON.parse(sessionStorage["user"]);
+        if($scope.Newcomment.text!=undefined){
+            var text = $scope.Newcomment.text;
+            $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+                $http.post(base_url + "/comment/" + msg_id, {
+                    username: data.username,
+                    id: usuario.userid,
+                    text: text,
+                    imageUrl:data.imageUrl,
+                    token: usuario.token
+                }).success(function () {
+                    getMessage();
+                    $scope.Newcomment.text=null;
+                    $scope.modal.hide();
+                })
+            });
+        }
+        else
+        {
+            $ionicPopup.alert({
+                title: 'Error',
+                content: 'Please fill the fields correctly'
+            });
+        }
+    };
+    $scope.Cancel= function () {
+        $scope.modal.hide();
     };
     $scope.enviarMensaje = function(id) {
         if(sessionStorage["user"]!=undefined) {
@@ -671,7 +730,107 @@ $scope.search=function(){
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 })
-    .controller('UpdatemsgCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
+    .controller('CommentCtrl', function($scope,$ionicModal,$ionicPopup, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
+        // Set Header
+        $scope.usuar = JSON.parse(sessionStorage["user"]);
+        var msg_id = sessionStorage["viewcomment"];
+        var usuario = JSON.parse(sessionStorage["user"]);
+        $scope.$parent.showHeader();
+        $scope.$parent.clearFabs();
+        $scope.$parent.setHeaderFab('left');
+        $scope.Newcomment={};
+
+        // Delay expansion
+        $timeout(function() {
+            $scope.isExpanded = true;
+            $scope.$parent.setExpanded(true);
+        }, 300);
+
+        // Set Motion
+        ionicMaterialMotion.fadeSlideInRight();
+
+        $scope.myUser={}
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+        function getcomment(){
+            $http.get(base_url+'/message/'+msg_id).success(function (data) {
+                $scope.messages=data;
+                $scope.comments=data.comment;
+                $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+                    $scope.myUser=data;
+                })
+            }).error(function (err) {
+                console.log(err)
+            })
+        }
+        getcomment();
+        $scope.borrarMensaje = function (id) {
+            if(sessionStorage["user"]!=undefined) {
+                $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': usuario.token}})
+                    .success(function () {
+                        $state.go('app.profile');
+                    })
+                    .error(function (error, status, headers, config) {
+                        console.log(err);
+                    });
+            }
+        };
+        $scope.borrarComment= function (msg_id, cmt_id) {
+        $http.delete(base_url+'/comment/'+msg_id+'/'+cmt_id,{headers: {'x-access-token': usuario.token}}).success(function(){
+            getcomment();
+        })
+        }
+        $scope.openModal = function(id) {
+            sessionStorage["comment"]=id;
+            $ionicModal.fromTemplateUrl('my-modal.html', {
+                scope: $scope,
+                animation: 'fade-in-scale'
+            }).then(function(modal) {
+                $scope.modal = modal;
+                $scope.modal.show();
+            });
+        };
+        $scope.postcomment = function() {
+            var msg_id= sessionStorage["comment"];
+            var usuario = JSON.parse(sessionStorage["user"]);
+            if($scope.Newcomment.text!=undefined){
+                var text = $scope.Newcomment.text;
+                $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+                    $http.post(base_url + "/comment/" + msg_id, {
+                        username: data.username,
+                        id: usuario.userid,
+                        text: text,
+                        imageUrl:data.imageUrl,
+                        token: usuario.token
+                    }).success(function () {
+                        getcomment();
+                        $scope.Newcomment.text=null;
+                        $scope.modal.hide();
+                    })
+                });
+            }
+            else
+            {
+                $ionicPopup.alert({
+                    title: 'Error',
+                    content: 'Please fill the fields correctly'
+                });
+            }
+        };
+        $scope.Cancel= function () {
+            $scope.modal.hide();
+        };
+        $scope.likeMenssage = function(id){
+            $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token})
+                .success(function (data, status, headers, config) {
+                    getcomment();
+                })
+                .error(function (error, status, headers, config) {
+                    console.log(error);
+                });
+        };
+    })
+        .controller('UpdatemsgCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();
         $scope.isExpanded = true;

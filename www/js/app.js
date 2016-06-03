@@ -57,6 +57,18 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
             }
         }
     })
+        .state('app.comment', {
+            url: '/comment',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/comment.html',
+                    controller: 'CommentCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.search', {
             url: '/search',
             views: {

@@ -1,0 +1,55 @@
+<ion-view view-title="Comments">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <div class="list card stable-bg">
+            <div class="item item-avatar">
+                <img ng-src={{messages.username.imageUrl}}>
+                <h2>{{messages.username.username}}</h2>
+                <p>{{messages.username.mail}}</p>
+            </div>
+
+            <div class="item item-body">
+                {{msg.text}}
+                <p>
+                    <a class="subdued">{{messages.like}} Likes </a>
+                    <a class="subdued">{{messages.comment.length}} Comments </a>
+                </p>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                    <i class="icon ion-thumbsup" ng-click="likeMenssage(messages._id)"></i> Like
+                </a>
+                <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                    <i class="icon ion-chatbox" ng-click="openModal(messages._id)"></i> Comment
+                </a>
+                <a  ng-if="usuar.userid==messages.username._id" class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                    <i class="icon ion-close-circled"  ng-click="borrarMensaje(messages._id)"></i> Delete
+                </a>
+            </div>
+        </div>
+        <div ng-repeat="comment in comments" >
+                <a class="item item-avatar item-icon-right">
+                    <img ng-src={{comment.imageUrl}}>
+                    <h2>{{comment.username}}</h2>
+                    <p>{{comment.text}}</p>
+                    <i ng-if="comment.username==myUser.username" ng-click="borrarComment(messages._id,comment._id)" class="icon ion-close-circled"></i>
+                </a>
+        </div>
+    </ion-content>
+    <script id="my-modal.html" type="text/ng-template">
+        <ion-modal-view class="ion-nifty-modal">
+            <div class="ion-modal-content-custom">
+                <ion-content class="padding">
+                    <label style="font-size: 12pt;font-weight: normal;color: white;" class="item item-input">Comment...
+                        <br>
+                        <input type="text" ng-model="Newcomment.text" style="font-size: 12pt;font-weight: normal;color: white;">
+                    </label>
+                    <br>
+                    <br>
+                    <br>
+                    <button class="button button-full button-positive" ng-click="postcomment()">Post Comment</button>
+                    <button class="button button-full button-bar-energized" ng-click="Cancel()">Cancel</button>
+                </ion-content>
+            </div>
+        </ion-modal-view>
+    </script>
+</ion-view>

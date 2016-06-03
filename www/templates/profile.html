@@ -1,5 +1,5 @@
 <ion-view view-title="Profile">
-    <ion-content ng-class="{expanded:$scope.isExpanded}">
+    <ion-content overflow-scroll="true">
         <div class="hero slide-up" style="background-image: url('img/profile-bg.jpg');">
             <div class="content">
                 <div class="avatar" style="background-image: url({{userFoto}});"></div>
@@ -28,22 +28,65 @@
                 </div>
             </div>
         </div>
-        <div ng-repeat="msg in messages" >
-            <div class="item card-item">
-                <div class="card stable-bg ink ink-dark">
-                    <div class="item item-avatar item-text-wrap">
-                        <span class="avatar" style="background-image: url({{userFoto}});"></span>
-                        <strong>{{userName}}</strong> says "{{msg.text}}"
-                    </div>
-                    <div class="card-footer text-right padding">
-                        <i class="icon ion-chatbubble positive"></i>{{msg.comment.length}}
-                        <a><i class="icon ion-heart assertive"></i> {{msg.like}}</a>
-                        <div class="pull-left">
-                            <h4><i class="icon ion-clock"></i>{{msg.Date}}</h4>
-                        </div>
-                    </div>
-                </div>
+        <div class="list">
+            <label class="item item-input">
+                <input type="text" placeholder="What are you thinking..." ng-model="newMessage.message">
+            </label>
+            <div align="center">
+                <button ng-click="enviarMensaje()" class="button button-bar-calm">Send</button>
             </div>
         </div>
+        <div ng-repeat="msg in messages | orderBy: 'Date':true" >
+            <div class="list card stable-bg">
+                <div class="item item-avatar">
+                    <img ng-src={{userFoto}}>
+                    <h2>{{userName}}</h2>
+                    <p>{{userMail}}</p>
+                </div>
+
+                <div class="item item-body">
+                     {{msg.text}}
+                    <p>
+                        <a class="subdued">{{msg.like}} Likes </a>
+                        <a class="subdued" ng-click="showcomments(msg.comment.length, msg._id)">{{msg.comment.length}} Comments </a>
+                    </p>
+                    <div class="pull-left">
+                        <h4><i class="icon ion-clock"></i>{{msg.createdAt}}</h4>
+                    </div>
+                </div>
+                <div class="item tabs tabs-secondary tabs-icon-left">
+                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                        <i class="icon ion-thumbsup" ng-click="likeMenssage(msg._id)"></i> Like
+                    </a>
+                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                        <i class="icon ion-chatbox" ng-click="openModal(msg._id)"></i> Comment
+                    </a>
+                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                        <i class="icon ion-close-circled" ng-click="borrarMensaje(msg._id)"></i> Delete
+                    </a>
+                </div>
+            </div>
+            </div>
+        <ion-infinite-scroll distance="2"
+                             on-infinite="loadMoreData()"
+                             ng-if="!moredata"
+        ></ion-infinite-scroll>
     </ion-content>
+    <script id="my-modal.html" type="text/ng-template">
+        <ion-modal-view class="ion-nifty-modal">
+            <div class="ion-modal-content-custom">
+                <ion-content class="padding">
+                    <label style="font-size: 12pt;font-weight: normal;color: white;" class="item item-input">Comment...
+                        <br>
+                        <input type="text" ng-model="Newcomment.text" style="font-size: 12pt;font-weight: normal;color: white;">
+                    </label>
+                    <br>
+                    <br>
+                    <br>
+                    <button class="button button-full button-positive" ng-click="postcomment()">Post Comment</button>
+                    <button class="button button-full button-bar-energized" ng-click="Cancel()">Cancel</button>
+                </ion-content>
+            </div>
+        </ion-modal-view>
+    </script>
 </ion-view>
