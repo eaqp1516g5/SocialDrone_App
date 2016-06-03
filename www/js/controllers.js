@@ -1,6 +1,6 @@
 /* global angular, document, window */
 'use strict';
-var base_url = "http://10.192.235.163:8080";
+var base_url = "http://localhost:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
 .controller('AppCtrl', function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar) {
     // Form data for the login modal
@@ -583,14 +583,8 @@ $scope.search=function(){
     };
 
     $scope.doRefresh = function() {
-        $http.get(base_url + "/message")
-            .success(function (newItems) {
-                $scope.items = newItems;
-            })
-            .finally(function () {
-                // Stop the ion-refresher from spinning
-                $scope.$broadcast('scroll.refreshComplete');
-            });
+        getMessage();
+        $scope.$broadcast('scroll.refreshComplete');
     }
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
@@ -636,7 +630,25 @@ $scope.search=function(){
             $scope.modal.show();
         });
     };
-
+    $scope.pag=0;
+    $scope.nomore=true;
+    $scope.mas=function(){
+        console.log("mas");
+        $http.get(base_url + "/messages/pag="+ $scope.pag) //hacemos get de todos los messages.js
+            .success(function (data) {
+                console.log(data.data);
+                for(var i = 0; i<data.data.length;i++){
+                    $scope.messages.push(data.data[i]);
+                }
+                $scope.pag=$scope.pag+1;
+                console.log($scope.pag);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
+            .error(function (err) {
+                $scope.nomore=false;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+    }
     $scope.postcomment = function() {
         var msg_id= sessionStorage["comment"];
         var usuario = JSON.parse(sessionStorage["user"]);
@@ -711,11 +723,14 @@ $scope.search=function(){
         }
     };
     function getMessage() {
+        $scope.nomore=true;
+        $scope.pag=0;
         if (sessionStorage["user"] != undefined)
             $scope.usuar = JSON.parse(sessionStorage["user"]);
-        $http.get(base_url + "/message") //hacemos get de todos los messages.js
+        $http.get(base_url + "/messages/pag="+$scope.pag) //hacemos get de todos los messages.js
             .success(function (data) {
-                $scope.messages = data;
+                $scope.messages = data.data;
+                $scope.pag=$scope.pag+1;
                 $http.get(base_url + '/users/' + $scope.usuar.userid, {headers: {'x-access-token': $scope.usuar.token}})
                     .success(function (data) {
                         $scope.info = data;
