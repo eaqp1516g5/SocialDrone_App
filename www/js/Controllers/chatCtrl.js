@@ -1,0 +1,72 @@
+/**
+ * Created by Admin on 07/06/2016.
+ */
+angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'ionicMaterialMotion', '$ionicModal', '$ionicPopover', '$timeout', '$http','$ionicPopup', '$state','socketio', function($scope,ionicMaterialInk, ionicMaterialMotion, $ionicModal, $ionicPopover, $timeout, $http,$ionicPopup, $state,socket) {
+    // Delay expansion
+    $timeout(function () {
+        $scope.isExpanded = true;
+        $scope.$parent.setExpanded(true);
+    }, 300);
+    $scope.input={};
+    $scope.chat=[];
+    if(sessionStorage['conver']!=null||sessionStorage['conver']!=undefined){
+        if (sessionStorage["user"] != undefined) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $scope.usuar= usuario;
+            $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+                socket.emit('username', data.username);
+                }).error(function(err){
+            });
+            var conver = JSON.parse(sessionStorage['conver']);
+            $http.get(base_url + '/chatt/conversation/' + conver._id, {headers: {'x-access-token': usuario.token}})
+                .success(function (data) {
+                    $scope.chat=data;
+                    socket.emit('visto', {userid: usuario.userid, chat: conver._id});
+                })
+                .error(function (err) {
+                });
+        }
+    }
+    $scope.viewProfile = function(profile){
+        sessionStorage["userSearch"]=profile;
+        $state.go('app.usersearch');
+    }
+    $scope.sendMessage=function(){
+        socket.emit('chatmessage',{userid: usuario.userid,text: $scope.input.message, chatid: conver._id});
+    }
+    socket.on('chatmessage', function(data){
+        console.log(data);
+        if(data.chatid._id==conver._id) {
+            $scope.chat.push(data);
+            $scope.input = {};
+            socket.emit('visto', {userid: usuario.userid, chat: conver._id});
+        }
+    })
+    $http.get(base_url + '/users').success(function (data) {
+        $scope.users = data;
+        console.log("Obtengo users");
+        console.log($scope.users);
+    });
+    var _selected;
+    $scope.selected = undefined;
+    $scope.onSelect = function ($item, $model, $label) {
+        //window.location.href = "/user";
+        $http.post(base_url+'/chatt/user', {
+            token: usuario.token,
+            user: $model._id,
+            userid: usuario.userid,
+            conversation_id: conver._id
+        }).success(function (data) {
+        }).error(function (err) {
+        });
+        $scope.$item = $item;
+        $scope.$model = $model;
+        $scope.$label = $label;
+        $scope.userSelected = $model.username;
+
+    };
+    $scope.age = function(a){
+        return new Date(a);
+    }
+    socket.emit('visto', {userid: usuario.userid, chat: conver._id});
+}]);

@@ -2,7 +2,7 @@
  * Created by bernat on 17/04/16.
  */
 
-angular.module('starter').controller('ProfileCtrl', function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover) {
+angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateParams','$location', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$ionicPopup','$ionicModal', '$ionicPopover','socketio',function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover,socket) {
     $scope.users={};
     $scope.myUser={};
     $scope.us={};
@@ -11,6 +11,7 @@ angular.module('starter').controller('ProfileCtrl', function($scope,$state, $sta
     $scope.newMessage={};
     $scope.Newcomment={};
     var page = 0;
+
     $scope.loadMore = function() {
         var usuario = JSON.parse(sessionStorage["user"]);
         console.log(page);
@@ -225,5 +226,4 @@ angular.module('starter').controller('ProfileCtrl', function($scope,$state, $sta
                 console.log(error);
             });
     };
-    
-});
+}]);

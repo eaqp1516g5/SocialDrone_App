@@ -7,8 +7,38 @@
 
 angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','btford.socket-io','jett.ionic.filter.bar', 'starter.controllers', 'ionic-material', 'ionMdInput','ngCordova', 'ngOpenFB', 'ngCordovaOauth'])
 
-angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett.ionic.filter.bar', 'starter.controllers','ionic-material', 'ionMdInput','ngCordova', 'ngOpenFB', 'ngCordovaOauth'])
+angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett.ionic.filter.bar', 'starter.controllers','ionic-material', 'ionMdInput','ngCordova', 'ngOpenFB', 'ngCordovaOauth', 'btford.socket-io','nl2br',  'angularMoment'])
+    .factory('socketio',['$rootScope',function($rootScope){
+        var socket_url = "http://localhost:3000";
+        var socket = io.connect(socket_url);
+        return{
+            on: function(eventName, callback){
+                socket.on(eventName,function(){
+                    var args = arguments;
+                    $rootScope.$apply(function(){
+                        callback.apply(socket, args);
+                    });
+                });
+            },
+            emit: function(eventName, data, callback){
+                socket.emit(eventName, data, function(){
+                    var args = arguments;
+                    $rootScope.$apply(function(){
+                        if(callback){
+                            callback.apply(socket, args);
+                        }
+                    })
+                })
+            },
+            disconnect: function(){
+                socket.disconnect();
+            },
+            socket: socket
 
+        }
+
+
+    }])
 .run(function($ionicPlatform, ngFB) {
     ngFB.init( {appId: '974844992601335'} );
     $ionicPlatform.ready(function() {
@@ -127,7 +157,25 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
             }
         }
     })
+        .state('app.conversations', {
+            url: '/conversations',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/conversations.html',
+                    controller: 'conversationsCtrl'
+                }
+            }
+        })
 
+        .state('app.chat', {
+            url: '/chat',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/chat.html',
+                    controller: 'chatCtrl'
+                }
+            }
+        })
     .state('app.gallery', {
         url: '/gallery',
         views: {

@@ -1,0 +1,29 @@
+<ion-view view-title="Conversations">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="refresh()">
+        </ion-refresher>
+        <div class="content">
+            <ion-list>
+                <ion-item ng-repeat="chat in conversations" ng-click="ir(chat.chat)">
+                <a class="item item-avatar item-icon-right">
+                    <div ng-if="chat.visto==false">
+                        <h2>Messages without read</h2>
+                    </div>
+                    <div ng-if="chat.visto==true">
+                        <h2>All messages read</h2>
+                    </div>
+                    <p>Usuarios: {{chat.usuarios}}</p>
+                    <i class="icon ion-chatbubble muted"></i>
+                </a>
+                    </ion-item>
+                </ion-list>
+        </div>
+        <ion-infinite-scroll distance="10%"
+                             on-infinite="mas()"
+                             ng-if="nomore"
+        ></ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>

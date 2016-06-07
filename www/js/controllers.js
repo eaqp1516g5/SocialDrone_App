@@ -2,7 +2,7 @@
 'use strict';
 var base_url = "http://localhost:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
-.controller('AppCtrl', function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar) {
+.controller('AppCtrl', ['$scope','$http','$state', '$ionicModal', '$ionicPopover', '$timeout','$ionicFilterBar',function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar,socket) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -23,7 +23,39 @@ $scope.search=function(){
     ////////////////////////////////////////
     // Layout Methods
     ////////////////////////////////////////
-
+    if ($scope.currentUser) {
+        socket.on('connection', function (data) {
+            socket.emit('username', $scope.currentUser.username, function (data) {
+            });
+            socket.emit('notification', $scope.currentUser._id, function (data) {
+            });
+            socket.emit('chatnotification', $scope.currentUser._id, function (data) {
+            })
+        })
+        socket.on('chatnotification', function (data) {
+            $scope.chat = data.data;
+            $scope.novisto = data.visto;
+        });
+        socket.on('listaNicks', function (data) {
+            console.log(data);
+        })
+        socket.on('new notification', function (data) {
+            socket.emit('notification', $scope.currentUser._id, function (data) {
+            })
+        })
+        socket.on('newchatnotification', function (data) {
+            console.log('adios');
+            setTimeout(function () {
+                console.log('hola');
+                socket.emit('chatnotification', $scope.currentUser._id, function (data) {
+                })
+            }, 1000);
+        })
+        socket.on('notification', function (data) {
+            $scope.notlength = data.numeros;
+            $scope.notification = data.notifications;
+        })
+    }
     $scope.hideNavBar = function () {
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
     };
@@ -104,7 +136,7 @@ $scope.search=function(){
             fabs[0].remove();
         }
     };
-})
+}])
 
     .controller('LogoutCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http){
         
