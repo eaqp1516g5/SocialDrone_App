@@ -899,6 +899,17 @@ $scope.search=function(){
         selector: '.animate-fade-slide-in .item'
     });
 
+}).controller('DeregisterCtrl', function($scope, $stateParams, $http, ionicMaterialInk, ionicMaterialMotion) {
+    var base_url = "http://localhost:8080";
+    var usuario = JSON.parse(sessionStorage["user"]);
+console.log(usuario);
+    $http.delete(base_url + '/borraruser/' + usuario.userid).success(function (data) {
+        console.log(data);
+        if (data == "ok")
+            location.href = "/";
+    }).error(function (data) {
+        console.log(data);
+    })
 })
 
-;
+    ;
