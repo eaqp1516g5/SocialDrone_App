@@ -9,7 +9,7 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','btfo
 
 angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett.ionic.filter.bar', 'starter.controllers','ionic-material', 'ionMdInput','ngCordova', 'ngOpenFB', 'ngCordovaOauth', 'btford.socket-io','nl2br',  'angularMoment'])
     .factory('socketio',['$rootScope',function($rootScope){
-        var socket_url = "http://localhost:3000";
+        var socket_url = "http://192.168.1.40:3000";
         var socket = io.connect(socket_url);
         return{
             on: function(eventName, callback){
@@ -140,7 +140,7 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
                 }*/
             }
         })
-       
+
     .state('app.friends', {
         url: '/friends',
         views: {
@@ -207,7 +207,7 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
         }
     })
         .state('app.logout', {
-            
+
             views: {
                 'menuContent': {
                     controller: 'LogoutCtrl'
@@ -346,7 +346,7 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
                 }
             }
         });
-    
+
 
 
     // if none of the above states are matched, use this as the fallback

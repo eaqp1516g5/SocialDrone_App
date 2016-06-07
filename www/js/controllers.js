@@ -1,6 +1,6 @@
 /* global angular, document, window */
 'use strict';
-var base_url = "http://localhost:8080";
+var base_url = "http://192.168.1.40:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
 .controller('AppCtrl', ['$scope','$http','$state', '$ionicModal', '$ionicPopover', '$timeout','$ionicFilterBar',function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar,socket) {
     // Form data for the login modal
@@ -931,6 +931,16 @@ $scope.search=function(){
         selector: '.animate-fade-slide-in .item'
     });
 
+}).controller('DeregisterCtrl', function($scope, $stateParams, $http, ionicMaterialInk, ionicMaterialMotion) {
+    var usuario = JSON.parse(sessionStorage["user"]);
+console.log(usuario);
+    $http.delete(base_url + '/borraruser/' + usuario.userid).success(function (data) {
+        console.log(data);
+        if (data == "ok")
+            location.href = "/";
+    }).error(function (data) {
+        console.log(data);
+    })
 })
 
-;
+    ;
