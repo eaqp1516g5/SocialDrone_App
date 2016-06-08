@@ -41,6 +41,10 @@
                 </div>
             </div>
         </div>
+        <ion-infinite-scroll distance="10%"
+                             on-infinite="mas()"
+                             ng-if="nomore"
+        ></ion-infinite-scroll>
     </ion-content>
     <script id="my-modal.html" type="text/ng-template">
         <ion-modal-view class="ion-nifty-modal">

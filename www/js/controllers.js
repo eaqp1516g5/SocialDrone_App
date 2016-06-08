@@ -2,7 +2,7 @@
 'use strict';
 var base_url = "http://localhost:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
-.controller('AppCtrl', function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar) {
+.controller('AppCtrl', ['$scope','$http','$state', '$ionicModal', '$ionicPopover', '$timeout','$ionicFilterBar',function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar,socket) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -23,7 +23,39 @@ $scope.search=function(){
     ////////////////////////////////////////
     // Layout Methods
     ////////////////////////////////////////
-
+    if ($scope.currentUser) {
+        socket.on('connection', function (data) {
+            socket.emit('username', $scope.currentUser.username, function (data) {
+            });
+            socket.emit('notification', $scope.currentUser._id, function (data) {
+            });
+            socket.emit('chatnotification', $scope.currentUser._id, function (data) {
+            })
+        })
+        socket.on('chatnotification', function (data) {
+            $scope.chat = data.data;
+            $scope.novisto = data.visto;
+        });
+        socket.on('listaNicks', function (data) {
+            console.log(data);
+        })
+        socket.on('new notification', function (data) {
+            socket.emit('notification', $scope.currentUser._id, function (data) {
+            })
+        })
+        socket.on('newchatnotification', function (data) {
+            console.log('adios');
+            setTimeout(function () {
+                console.log('hola');
+                socket.emit('chatnotification', $scope.currentUser._id, function (data) {
+                })
+            }, 1000);
+        })
+        socket.on('notification', function (data) {
+            $scope.notlength = data.numeros;
+            $scope.notification = data.notifications;
+        })
+    }
     $scope.hideNavBar = function () {
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
     };
@@ -104,7 +136,7 @@ $scope.search=function(){
             fabs[0].remove();
         }
     };
-})
+}])
 
     .controller('LogoutCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk,$state, $http){
         
@@ -583,14 +615,8 @@ $scope.search=function(){
     };
 
     $scope.doRefresh = function() {
-        $http.get(base_url + "/message")
-            .success(function (newItems) {
-                $scope.items = newItems;
-            })
-            .finally(function () {
-                // Stop the ion-refresher from spinning
-                $scope.$broadcast('scroll.refreshComplete');
-            });
+        getMessage();
+        $scope.$broadcast('scroll.refreshComplete');
     }
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
@@ -636,7 +662,25 @@ $scope.search=function(){
             $scope.modal.show();
         });
     };
-
+    $scope.pag=0;
+    $scope.nomore=true;
+    $scope.mas=function(){
+        console.log("mas");
+        $http.get(base_url + "/messages/pag="+ $scope.pag) //hacemos get de todos los messages.js
+            .success(function (data) {
+                console.log(data.data);
+                for(var i = 0; i<data.data.length;i++){
+                    $scope.messages.push(data.data[i]);
+                }
+                $scope.pag=$scope.pag+1;
+                console.log($scope.pag);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
+            .error(function (err) {
+                $scope.nomore=false;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+    }
     $scope.postcomment = function() {
         var msg_id= sessionStorage["comment"];
         var usuario = JSON.parse(sessionStorage["user"]);
@@ -711,11 +755,14 @@ $scope.search=function(){
         }
     };
     function getMessage() {
+        $scope.nomore=true;
+        $scope.pag=0;
         if (sessionStorage["user"] != undefined)
             $scope.usuar = JSON.parse(sessionStorage["user"]);
-        $http.get(base_url + "/message") //hacemos get de todos los messages.js
+        $http.get(base_url + "/messages/pag="+$scope.pag) //hacemos get de todos los messages.js
             .success(function (data) {
-                $scope.messages = data;
+                $scope.messages = data.data;
+                $scope.pag=$scope.pag+1;
                 $http.get(base_url + '/users/' + $scope.usuar.userid, {headers: {'x-access-token': $scope.usuar.token}})
                     .success(function (data) {
                         $scope.info = data;
@@ -884,6 +931,16 @@ $scope.search=function(){
         selector: '.animate-fade-slide-in .item'
     });
 
+}).controller('DeregisterCtrl', function($scope, $stateParams, $http, ionicMaterialInk, ionicMaterialMotion) {
+    var usuario = JSON.parse(sessionStorage["user"]);
+console.log(usuario);
+    $http.delete(base_url + '/borraruser/' + usuario.userid).success(function (data) {
+        console.log(data);
+        if (data == "ok")
+            location.href = "/";
+    }).error(function (data) {
+        console.log(data);
+    })
 })
 
-;
+    ;

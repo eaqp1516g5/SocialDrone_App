@@ -1,0 +1,65 @@
+<ion-view view-title='Chat'>
+<ion-content has-bouncing="true" class="has-header has-footer"
+             delegate-handle="userMessageScroll">
+    <div class="content has-header">
+    <div ng-repeat="message in chat" class="message-wrapper"
+         on-hold="onMessageHold($event, $index, message)">
+
+        <div ng-if="usuar.userid != message.user._id">
+
+            <img ng-click="viewProfile(message.user.username)" class="profile-pic left"
+                 ng-src="{{message.user.imageUrl}}" onerror="onProfilePicError(this)" />
+
+            <div class="chat-bubble left">
+
+                <div class="message" ng-bind-html="message.message | nl2br" autolinker>
+                </div>
+
+                <div class="message-detail">
+                              <span ng-click="viewProfile(message.user.username)"
+                                    class="bold">{{message.user.username}}</span>,
+                    <span am-time-ago="message.date"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <div ng-if="usuar.userid == message.user._id">
+
+            <img ng-click="viewProfile(message.user.username)" class="profile-pic right"
+                 ng-src="{{message.user.imageUrl}}" onerror="onProfilePicError(this)" />
+
+            <div class="chat-bubble right">
+
+                <div class="message" ng-bind-html="message.message | nl2br" autolinker>
+                </div>
+
+                <div class="message-detail">
+                              <span ng-click="viewProfile(message.user.username)"
+                                    class="bold">{{message.user.username}}</span>,
+                    <span am-time-ago="message.date"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="cf"></div>
+
+    </div>
+    </div>
+</ion-content>
+    <form name="sendMessageForm" ng-submit="sendMessage(sendMessageForm)" novalidate>
+        <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+            <label class="item-input-wrapper">
+                <textarea ng-model="input.message" value="" placeholder="Send {{toUser.username}} a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+            </label>
+            <div class="footer-btn-wrap">
+                <button class="button button-icon icon ion-android-send footer-btn" type="submit"
+                        ng-disabled="!input.message || input.message === ''">
+                </button>
+            </div>
+        </ion-footer-bar>
+    </form>
+
+</ion-view>
