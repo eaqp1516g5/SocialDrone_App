@@ -10,18 +10,9 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
     $scope.messages={};
     $scope.newMessage={};
     $scope.Newcomment={};
-    var page = 0;
-
-    $scope.loadMore = function() {
-        var usuario = JSON.parse(sessionStorage["user"]);
-        console.log(page);
-        $http.get(base_url+'/message/user/'+usuario.userid+'/page='+page).success(function (data) {
-            page++;
-            $scope.messages=data;
-            //$scope.$broadcast('scroll.infiniteScrollComplete');
-        });
-    };
-
+    $scope.nomore=true;
+    $scope.page=0;
+    var usuario = JSON.parse(sessionStorage["user"]);
     $scope.$on('$stateChangeSuccess', function() {
         $scope.loadMore();
     });
@@ -33,17 +24,56 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
         if(numFollowers!=0)
          $state.go("app.followers");
     };
+    $scope.flag = false;
+    getMyMessages();
     function getMyMessages (){
+        $scope.nomore=true;
+        $scope.page=0;
         if (sessionStorage["user"] != undefined) {
-            var usuario = JSON.parse(sessionStorage["user"]);
-            $http.get(base_url+'/message/user/'+usuario.userid).success(function (data) {
+            $http.get(base_url+'/message/user/'+usuario.userid+'/page='+$scope.page).success(function (data) {
+                console.log('añado  '+data);
                 $scope.messages=data;
-            }).error(function (err) {
-                console.log(err)
+                $scope.page=$scope.page+1;
+                $scope.flag = true;
+                console.log($scope.page+'get my message pagination');
             });
         }
     }
-    //getMyMessages();
+    $scope.nomore=true;
+
+    $scope.loadMore = function() {
+        console.log($scope.flag);
+        if($scope.flag)
+        {
+            console.log('paginaaaaa'+$scope.page);
+            console.log("mas paginas " + $scope.page);
+            $http.get(base_url + '/message/user/' + usuario.userid + '/page=' + $scope.page)
+                .success(function (data) {
+                    console.log(data.length + ' data.lenght');
+                        for (var i = 0; i < data.length; i++) {
+                            console.log('entroooooo y añado     ' + data[i].text);
+                            if (data[i] != undefined) {
+                                $scope.messages.push(data[i]);
+                            }
+                        }
+                    if(data.length!=0) {
+                        $scope.page = $scope.page + 1;
+                        console.log($scope.page);
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    }
+                    else{
+                        $scope.nomore = false;
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    }
+
+                })
+                .error(function (err) {
+                    console.log(err + 'errorrr');
+                    $scope.nomore = false;
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                });
+        }
+    }
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = false;
@@ -112,7 +142,7 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                     });
                 });
         }
-    }
+    };
     $scope.borrarMensaje = function (id) {
         if(sessionStorage["user"]!=undefined) {
             var usuario = JSON.parse(sessionStorage["user"]);
@@ -150,7 +180,7 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                         token: usuario.token
                     })
                     .success(function (data, status, headers, config) {
-                        $http.get(base_url + "/message/" + id) //hacemos get de todos los users
+                        $http.get(base_url + "/message/" + id)
                             .success(function (data) {
                                 $scope.message1 = data;
                                 $scope.comment = data.comment;

@@ -67,9 +67,9 @@
                 </div>
             </div>
             </div>
-        <ion-infinite-scroll distance="2"
-                             on-infinite="loadMoreData()"
-                             ng-if="!moredata"
+        <ion-infinite-scroll distance="10%"
+                             on-infinite="loadMore()"
+                             ng-if="nomore"
         ></ion-infinite-scroll>
     </ion-content>
     <script id="my-modal.html" type="text/ng-template">
