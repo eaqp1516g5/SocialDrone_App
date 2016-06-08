@@ -1,12 +1,13 @@
 /**
  * Created by Admin on 07/06/2016.
  */
-angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'ionicMaterialMotion', '$ionicModal', '$ionicPopover', '$timeout', '$http','$ionicPopup', '$state','socketio', function($scope,ionicMaterialInk, ionicMaterialMotion, $ionicModal, $ionicPopover, $timeout, $http,$ionicPopup, $state,socket) {
+angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'ionicMaterialMotion', '$ionicModal', '$ionicPopover', '$timeout', '$http','$ionicPopup', '$state','socketio','$ionicScrollDelegate', function($scope,ionicMaterialInk, ionicMaterialMotion, $ionicModal, $ionicPopover, $timeout, $http,$ionicPopup, $state,socket, $ionicScrollDelegate) {
     // Delay expansion
     $timeout(function () {
         $scope.isExpanded = true;
         $scope.$parent.setExpanded(true);
     }, 300);
+    var viewscroll = $ionicScrollDelegate.$getByHandle('userMessageScroll');
     $scope.input={};
     $scope.chat=[];
     if(sessionStorage['conver']!=null||sessionStorage['conver']!=undefined){
@@ -21,6 +22,10 @@ angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'i
             $http.get(base_url + '/chatt/conversation/' + conver._id, {headers: {'x-access-token': usuario.token}})
                 .success(function (data) {
                     $scope.chat=data;
+                    $timeout(function()
+                    {
+                        viewscroll.scrollBottom();
+                    },0);
                     socket.emit('visto', {userid: usuario.userid, chat: conver._id});
                 })
                 .error(function (err) {
@@ -39,6 +44,9 @@ angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'i
         if(data.chatid._id==conver._id) {
             $scope.chat.push(data);
             $scope.input = {};
+            $timeout(function(){
+                    viewscroll.scrollBottom();
+            },0)
             socket.emit('visto', {userid: usuario.userid, chat: conver._id});
         }
     })
