@@ -9,6 +9,7 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
     $scope.$parent.setHeaderFab(false);
     var miUsuario = JSON.parse(sessionStorage["user"]);
     var userSearched = sessionStorage["userSearch"];
+    $scope.Newcomment={};
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
@@ -65,7 +66,29 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
             $state.go("app.followerSearch");
     };
 
+    $scope.borrarMensaje = function (id) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Delete message',
+            template: 'Are you sure you want to delete this message?'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                if(sessionStorage["user"]!=undefined) {
+                    var usuario = JSON.parse(sessionStorage["user"]);
+                    $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': usuario.token}})
+                        .success(function () {
+                            getMyMessages();
+                        })
+                        .error(function (error, status, headers, config) {
+                            console.log(err);
+                        });
+                }
+            } else {
+                console.log('You are not sure');
+            }
+        });
 
+    };
     function getNumFollowers(userid){
         $http.get(base_url+'/following/'+userid).success(function (data) {
             $scope.numFollowing = data.length;
@@ -122,5 +145,63 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
         }).error(function (err) {
             console.log(err)
         });
+    };
+    $scope.showcomments= function (num,id) {
+        sessionStorage["viewcomment"]=id;
+        if(num!=0){
+            $state.go('app.comment');
+        }
+    };
+    $scope.showPopup = function(id) {
+        var us;
+        $scope.userSearched = userSearched;
+        $http.get(base_url+'/api/user/'+userSearched).success(function (data) {
+             us = data._id;
+        })
+        $scope.data = {};
+        var msg_id=id;
+        // An elaborate, custom popup
+        var myPopup = $ionicPopup.show({
+            template: '<input type="text" ng-model="Newcomment.text">',
+            title: 'Comment',
+            subTitle: 'Enter your text',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Comment</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        if (!$scope.Newcomment.text) {
+                            //don't allow the user to close unless he enters wifi password
+                            e.preventDefault();
+                        } else {
+                            if($scope.Newcomment.text!=undefined){
+                                var text = $scope.Newcomment.text;
+                                $http.get(base_url+'/users/'+miUsuario.userid,{headers: {'x-access-token': miUsuario.token}}).success(function (data) {
+                                    $http.post(base_url + "/comment/" + msg_id, {
+                                        username: data.username,
+                                        id: miUsuario.userid,
+                                        text: text,
+                                        imageUrl:data.imageUrl,
+                                        token: miUsuario.token
+                                    }).success(function () {
+                                        $scope.Newcomment.text=null;
+                                        myPopup.close();
+                                        getMyMessages(us);
+                                    })
+                                });
+                            }
+                        }
+                    }
+                }
+            ]
+        });
+        myPopup.then(function(res) {
+            console.log('Tapped!', res);
+        });
+        $timeout(function() {
+            myPopup.close(); //close the popup after 3 seconds for some reason
+        }, 6000);
     };
 });

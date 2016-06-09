@@ -13,7 +13,7 @@
 
         <ion-list>
             <ion-item ng-repeat="item in items" ng-click="onselect(item.text)">
-                <a class="item item-avatar item-icon-right">
+                <a ng-if="item.text!=userName" class="item item-avatar item-icon-right">
                     <img ng-src={{item.imageURL}}>
                     <h2>{{item.text}}</h2>
                     <p>{{item.mail}}</p>

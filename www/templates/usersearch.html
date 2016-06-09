@@ -25,22 +25,40 @@
                 </div>
             </div>
         </div>
-        <div ng-repeat="msg in messages" >
-            <div class="item card-item">
-                <div class="card stable-bg ink ink-dark">
-                    <div class="item item-avatar item-text-wrap">
-                        <span class="avatar" style="background-image: url({{usersearchedImageUrl}});"></span>
-                        <strong>{{userSearched}}</strong> says "{{msg.text}}"
+        <div ng-repeat="msg in messages | orderBy: 'Date':true" >
+            <div class="list card stable-bg">
+                <div class="item item-avatar">
+                    <img ng-src={{userFoto}}>
+                    <h2>{{userName}}</h2>
+                    <p>{{userMail}}</p>
+                </div>
+
+                <div class="item item-body">
+                    {{msg.text}}
+                    <p>
+                        <a class="subdued">{{msg.like}} Likes </a>
+                        <a class="subdued" ng-click="showcomments(msg.comment.length, msg._id)">{{msg.comment.length}} Comments </a>
+                    </p>
+                    <div class="pull-left">
+                        <h4><i class="icon ion-clock"></i>{{msg.createdAt}}</h4>
                     </div>
-                    <div class="card-footer text-right padding">
-                        <i class="icon ion-chatbubble positive"></i>{{msg.comment.length}}
-                        <a><i class="icon ion-heart assertive"></i> {{msg.like}}</a>
-                        <div class="pull-left">
-                            <h4><i class="icon ion-clock"></i>{{msg.Date}}</h4>
-                        </div>
-                    </div>
+                </div>
+                <div class="item tabs tabs-secondary tabs-icon-left">
+                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                        <i class="icon ion-thumbsup" ng-click="likeMenssage(msg._id)"></i> Like
+                    </a>
+                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
+                        <i class="icon ion-chatbox" ng-click="showPopup(msg._id)"></i> Comment
+                    </a>
                 </div>
             </div>
         </div>
+        <ion-infinite-scroll distance="10%"
+                             on-infinite="loadMore()"
+                             ng-if="nomore"
+        ></ion-infinite-scroll>
     </ion-content>
+    <script id="popup-template.html" type="text/ng-template">
+        <input ng-model="Newcomment.text" type="text" placeholder="Comment">
+    </script>
 </ion-view>

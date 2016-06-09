@@ -5,6 +5,7 @@ angular.module('starter').controller('FollsearchCtrl', function($scope,ionicMate
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     var usersearched = sessionStorage["userSearch"];
+    var miUsuario = JSON.parse(sessionStorage["user"])
     $scope.usersearched = usersearched;
     function getFollowing(){
         $http.get(base_url+'/api/user/'+usersearched).success(function (data) {
@@ -20,8 +21,18 @@ angular.module('starter').controller('FollsearchCtrl', function($scope,ionicMate
     }
     getFollowing();
     $scope.userprofile= function (username) {
-        sessionStorage["userSearch"]=username;
-        $state.go('app.usersearch');
+        console.log(miUsuario+'este es el usuario');
+        console.log(miUsuario.token+'este es el token');
+        $http.get(base_url+'/users/'+miUsuario.userid, {headers: {'x-access-token': miUsuario.token}}).success(function (data) {
+            console.log('la data del followers '+data);
+            sessionStorage["userSearch"] = username;
+            console.log(data.username+username);
+            if(data.username==username)
+                $state.go('app.profile');
+            else
+                $state.go('app.usersearch');
+        });
+
 
     };
     // Delay expansion

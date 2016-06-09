@@ -143,17 +143,41 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                 });
         }
     };
+    $scope.showConfirm = function() {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Consume Ice Cream',
+            template: 'Are you sure you want to eat this ice cream?'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                console.log('You are sure');
+            } else {
+                console.log('You are not sure');
+            }
+        });
+    };
     $scope.borrarMensaje = function (id) {
-        if(sessionStorage["user"]!=undefined) {
-            var usuario = JSON.parse(sessionStorage["user"]);
-            $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': usuario.token}})
-                .success(function () {
-                    getMyMessages();
-                })
-                .error(function (error, status, headers, config) {
-                    console.log(err);
-                });
-        }
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Delete message',
+            template: 'Are you sure you want to delete this message?'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                if(sessionStorage["user"]!=undefined) {
+                    var usuario = JSON.parse(sessionStorage["user"]);
+                    $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': usuario.token}})
+                        .success(function () {
+                            getMyMessages();
+                        })
+                        .error(function (error, status, headers, config) {
+                            console.log(err);
+                        });
+                }
+            } else {
+                console.log('You are not sure');
+            }
+        });
+
     };
     $scope.enviarMensaje = function(id) {
         if(sessionStorage["user"]!=undefined) {
@@ -170,7 +194,10 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                         console.log(data);
                     })
                     .error(function (error, status, headers, config) {
-                        console.log(error);
+                        $ionicPopup.alert({
+                            title: 'Error ',
+                            content: 'Please introduce your message correctly'
+                        });
                     });
             } else {
                 $http.post(base_url + "/comment/" + id, {
@@ -197,6 +224,53 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                     });
             }
         }
+    };
+    $scope.showPopup = function(id) {
+        $scope.data = {};
+        var msg_id=id;
+        // An elaborate, custom popup
+        var myPopup = $ionicPopup.show({
+            template: '<input type="text" ng-model="Newcomment.text">',
+            title: 'Comment',
+            subTitle: 'Enter your text',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Comment</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        if (!$scope.Newcomment.text) {
+                            //don't allow the user to close unless he enters wifi password
+                            e.preventDefault();
+                        } else {
+                            if($scope.Newcomment.text!=undefined){
+                                var text = $scope.Newcomment.text;
+                                $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+                                    $http.post(base_url + "/comment/" + msg_id, {
+                                        username: data.username,
+                                        id: usuario.userid,
+                                        text: text,
+                                        imageUrl:data.imageUrl,
+                                        token: usuario.token
+                                    }).success(function () {
+                                        $scope.Newcomment.text=null;
+                                        myPopup.close();
+                                        getMyMessages();
+                                    })
+                                });
+                            }
+                        }
+                    }
+                }
+            ]
+        });
+        myPopup.then(function(res) {
+            console.log('Tapped!', res);
+        });
+        $timeout(function() {
+            myPopup.close(); //close the popup after 3 seconds for some reason
+        }, 6000);
     };
 
     $scope.openModal = function(id) {

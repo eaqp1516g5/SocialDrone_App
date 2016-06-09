@@ -1,10 +1,14 @@
 angular.module('starter').controller('searchCtrl', function($scope,$state,$ionicFilterBar, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http) {
     var filterBarInstance;
-
     function getItems () {
+
         var items = [];
         $http.get(base_url + '/users').success(function (data) {
-        for (var x = 0; x < data.length; x++) {
+            var usuario = JSON.parse(sessionStorage["user"]);
+            $http.get(base_url + '/users/' + usuario._id, {headers: {'x-access-token': usuario.token}}).success(function (data) {
+                console.log('mi usuario'+data);
+            })
+                for (var x = 0; x < data.length; x++) {
             items.push({text:data[x].username,email:data[x].mail,imageURL:data[x].imageUrl});
         }
         $scope.items = items;

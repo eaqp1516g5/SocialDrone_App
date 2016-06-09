@@ -13,8 +13,14 @@ angular.module('starter').controller('FollowerSearchCtrl', function($scope,ionic
         $scope.$parent.setExpanded(true);
     }, 300);
     $scope.userprofile = function (username) {
-        sessionStorage["userSearch"] = username;
-        $state.go('app.usersearch');
+        $http.get(base_url+'/users/'+miUsuario.userid, {headers: {'x-access-token': miUsuario.token}}).success(function (data) {
+            sessionStorage["userSearch"] = username;
+            console.log(data.username+username);
+            if(data.username==username)
+                $state.go('app.profile');
+            else
+                $state.go('app.usersearch');
+        });
 
     };
 

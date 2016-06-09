@@ -598,6 +598,7 @@ $scope.search=function(){
 .controller('ActivityCtrl', function($scope,$ionicModal,$ionicPopup, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
+    var usuario = JSON.parse(sessionStorage["user"]);
     $scope.isExpanded = true;
     $scope.$parent.setExpanded(true);
     $scope.$parent.setHeaderFab('right');
@@ -640,27 +641,74 @@ $scope.search=function(){
         }
     };
     $scope.borrarMensaje = function (id) {
-        if(sessionStorage["user"]!=undefined) {
-            var usuario = JSON.parse(sessionStorage["user"]);
-            $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': $scope.usuar.token}})
-                .success(function (data, status, headers, config) {
-                    getMessage();
-                })
-                .error(function (error, status, headers, config) {
-                    console.log(err);
-                });
-        }
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Delete message',
+            template: 'Are you sure you want to delete this message?'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                if(sessionStorage["user"]!=undefined) {
+                    var usuario = JSON.parse(sessionStorage["user"]);
+                    $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': usuario.token}})
+                        .success(function () {
+                            getMyMessages();
+                        })
+                        .error(function (error, status, headers, config) {
+                            console.log(err);
+                        });
+                }
+            } else {
+                console.log('You are not sure');
+            }
+        });
     };
 
     $scope.openModal = function(id) {
-        sessionStorage["comment"]=id;
-        $ionicModal.fromTemplateUrl('my-modal.html', {
+        $scope.data = {};
+        var msg_id=id;
+        // An elaborate, custom popup
+        var myPopup = $ionicPopup.show({
+            template: '<input type="text" ng-model="Newcomment.text">',
+            title: 'Comment',
+            subTitle: 'Enter your text',
             scope: $scope,
-            animation: 'fade-in-scale'
-        }).then(function(modal) {
-            $scope.modal = modal;
-            $scope.modal.show();
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Comment</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        if (!$scope.Newcomment.text) {
+                            //don't allow the user to close unless he enters wifi password
+                            e.preventDefault();
+                        } else {
+                            if($scope.Newcomment.text!=undefined){
+                                var text = $scope.Newcomment.text;
+                                $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+                                    $http.post(base_url + "/comment/" + msg_id, {
+                                        username: data.username,
+                                        id: usuario.userid,
+                                        text: text,
+                                        imageUrl:data.imageUrl,
+                                        token: usuario.token
+                                    }).success(function () {
+                                        $scope.Newcomment.text=null;
+                                        myPopup.close();
+                                        getMessage();
+                                    })
+                                });
+                            }
+                        }
+                    }
+                }
+            ]
         });
+        myPopup.then(function(res) {
+            console.log('Tapped!', res);
+        });
+        $timeout(function() {
+            myPopup.close(); //close the popup after 3 seconds for some reason
+        }, 6000);
     };
     $scope.pag=0;
     $scope.nomore=true;
@@ -726,7 +774,10 @@ $scope.search=function(){
                         console.log(data);
                     })
                     .error(function (error, status, headers, config) {
-                        console.log(error);
+                        $ionicPopup.alert({
+                            title: 'Error ',
+                            content: 'Please introduce your message correctly'
+                        });
                     });
             } else {
                 $http.post(base_url + "/comment/" + id, {
@@ -812,30 +863,88 @@ $scope.search=function(){
         }
         getcomment();
         $scope.borrarMensaje = function (id) {
-            if(sessionStorage["user"]!=undefined) {
-                $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': usuario.token}})
-                    .success(function () {
-                        $state.go('app.profile');
-                    })
-                    .error(function (error, status, headers, config) {
-                        console.log(err);
-                    });
-            }
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Delete message',
+                template: 'Are you sure you want to delete this message?'
+            });
+            confirmPopup.then(function(res) {
+                if(res) {
+                    if(sessionStorage["user"]!=undefined) {
+                        $http.delete(base_url + "/message/" + id, {headers: {'x-access-token': usuario.token}})
+                            .success(function () {
+                                $state.go('app.profile');
+                            })
+                            .error(function (error, status, headers, config) {
+                                console.log(err);
+                            });
+                    }
+                } else {
+                    console.log('You are not sure');
+                }
+            });
+
         };
         $scope.borrarComment= function (msg_id, cmt_id) {
-        $http.delete(base_url+'/comment/'+msg_id+'/'+cmt_id,{headers: {'x-access-token': usuario.token}}).success(function(){
-            getcomment();
-        })
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Delete message',
+                template: 'Are you sure you want to delete this message?'
+            });
+            confirmPopup.then(function(res) {
+                if(res) {
+                    $http.delete(base_url+'/comment/'+msg_id+'/'+cmt_id,{headers: {'x-access-token': usuario.token}}).success(function() {
+                        getcomment();
+                    })
+                } else {
+                    console.log('You are not sure');
+                }
+            });
         }
         $scope.openModal = function(id) {
-            sessionStorage["comment"]=id;
-            $ionicModal.fromTemplateUrl('my-modal.html', {
+            $scope.data = {};
+            var msg_id=id;
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<input type="text" ng-model="Newcomment.text">',
+                title: 'Comment',
+                subTitle: 'Enter your text',
                 scope: $scope,
-                animation: 'fade-in-scale'
-            }).then(function(modal) {
-                $scope.modal = modal;
-                $scope.modal.show();
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Comment</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.Newcomment.text) {
+                                //don't allow the user to close unless he enters wifi password
+                                e.preventDefault();
+                            } else {
+                                if($scope.Newcomment.text!=undefined){
+                                    var text = $scope.Newcomment.text;
+                                    $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+                                        $http.post(base_url + "/comment/" + msg_id, {
+                                            username: data.username,
+                                            id: usuario.userid,
+                                            text: text,
+                                            imageUrl:data.imageUrl,
+                                            token: usuario.token
+                                        }).success(function () {
+                                            $scope.Newcomment.text=null;
+                                            myPopup.close();
+                                            getcomment();
+                                        })
+                                    });
+                                }
+                            }
+                        }
+                    }
+                ]
             });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 6000);
         };
         $scope.postcomment = function() {
             var msg_id= sessionStorage["comment"];

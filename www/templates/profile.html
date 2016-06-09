@@ -59,7 +59,7 @@
                         <i class="icon ion-thumbsup" ng-click="likeMenssage(msg._id)"></i> Like
                     </a>
                     <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
-                        <i class="icon ion-chatbox" ng-click="openModal(msg._id)"></i> Comment
+                        <i class="icon ion-chatbox" ng-click="showPopup(msg._id)"></i> Comment
                     </a>
                     <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
                         <i class="icon ion-close-circled" ng-click="borrarMensaje(msg._id)"></i> Delete
@@ -88,5 +88,8 @@
                 </ion-content>
             </div>
         </ion-modal-view>
+    </script>
+    <script id="popup-template.html" type="text/ng-template">
+        <input ng-model="Newcomment.text" type="text" placeholder="Comment">
     </script>
 </ion-view>
