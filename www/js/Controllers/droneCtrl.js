@@ -3,7 +3,7 @@ angular.module('starter').controller('droneCtrl',['$scope','ionicMaterialInk', '
     $scope.newDrone={};
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
-    $scope.picture={};
+    //$scope.picture={};
     $scope.$parent.setHeaderFab('left');
     var usuario = JSON.parse(sessionStorage["user"]);
 
@@ -94,32 +94,49 @@ $scope.drones={};
         }
     getdrones();
     $scope.createDrone = function() {
-        var options ={
+        console.log('pictureeee');
+        console.log($scope.picture);
+        if (!$scope.newDrone.vendor || !$scope.newDrone.desc || !$scope.newDrone.mod) {
+            $ionicPopup.alert({
+                title: 'Error ',
+                content: 'Fill the fields correctly'
+            });
+        }
+        else if($scope.picture==undefined){
+            $ionicPopup.alert({
+                title: 'Error ',
+                content: 'Please select a photo'
+            });
+        }
+        else {
+        var options = {
             fileKey: "file",
             fileName: 'filename.jpg',
             mimeType: 'image/jpeg',
-            chunkedMode:false,
-            params: { vendor: $scope.newDrone.vendor,
+            chunkedMode: false,
+            params: {
+                vendor: $scope.newDrone.vendor,
                 description: $scope.newDrone.desc,
                 model: $scope.newDrone.mod
-               }
+            }
         };
-        $cordovaFileTransfer.upload(base_url+'/drones',$scope.picture,options).then(
-            function (data){
+        $cordovaFileTransfer.upload(base_url + '/drones', $scope.picture, options).then(
+            function (data) {
                 $ionicPopup.alert({
                     title: 'Drone ',
                     content: 'Drone Added correctly'
                 });
-                $scope.newDrone=null;
-               // $state.go('app.login');
+                $scope.picture=undefined;
+                $scope.newDrone = null;
                 getdrones()
-            }, function (err){
+            }, function (err) {
                 console.log(err);
                 $ionicPopup.alert({
                     title: 'Fill the fields correctly ',
                     content: err
                 });
-            });
+            })
+    }
     };
 
     $scope.addDrone= function () {
