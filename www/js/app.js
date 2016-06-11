@@ -56,11 +56,11 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
     });
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $sceDelegateProvider) {
 
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
-
+    $sceDelegateProvider.resourceUrlWhitelist(['self', new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$')]);
     /*
     // Turn off back button text
     $ionicConfigProvider.backButton.previousTitleText(false);

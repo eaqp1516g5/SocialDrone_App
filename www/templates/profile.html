@@ -35,6 +35,7 @@
             <div align="center">
                 <button ng-click="enviarMensaje()" class="button button-bar-calm">Send</button>
             </div>
+
         </div>
         <div ng-repeat="msg in messages | orderBy: 'Date':true" >
             <div class="list card stable-bg">
@@ -45,7 +46,10 @@
                 </div>
 
                 <div class="item item-body">
-                     {{msg.text}}
+                    <div ng-if="msg.youtube" class="video-container">
+                        <iframe src={{msg.video}} frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    {{msg.text}}
                     <p>
                         <a class="subdued">{{msg.like}} Likes </a>
                         <a class="subdued" ng-click="showcomments(msg.comment.length, msg._id)">{{msg.comment.length}} Comments </a>
