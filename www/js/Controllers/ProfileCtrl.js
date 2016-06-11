@@ -2,7 +2,7 @@
  * Created by bernat on 17/04/16.
  */
 
-angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateParams','$location', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$ionicPopup','$ionicModal', '$ionicPopover','socketio',function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover,socket) {
+angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateParams','$location', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$ionicPopup','$ionicModal', '$ionicPopover','socketio','$sce', function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover,$sce,socket) {
     $scope.users={};
     $scope.myUser={};
     $scope.us={};
@@ -33,34 +33,87 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
         $scope.page=0;
         if (sessionStorage["user"] != undefined) {
             $http.get(base_url+'/message/user/'+usuario.userid+'/page='+$scope.page).success(function (data) {
-                console.log('añado  '+data);
+                console.log('los mensajes')
+                console.log(data);
                 $scope.messages=data;
+                var spl;
+                console.log('$scope.messages' + $scope.messages);
+                for (var i = 0; i < data.length; i++) {
+                    var str = data[i].text;
+                    if (str.search("youtube.com") != -1) {
+                        $scope.messages[i].youtube=true;
+                        console.log('$scope.messages2' + $scope.messages);
+                        console.log(data[i]+' es un video de youtube');
+                        var pl = str.split(" ");
+                        for (var x = 0; x < pl.length; x++) {
+                            if (pl[x].search("youtube.com") != -1) {
+                                spl = pl[x].split("=")[1];
+                                data[i].video = "https://www.youtube.com/embed/" +spl;
+                            }
+                        }
+                    }
+                    else{
+                        $scope.messages[i].youtube=false;
+                    }
+                    console.log($scope.messages);
+                    console.log('$scope.messages[i]'+$scope.messages.youtube+'el mensaje '+data[i].text);
+                }
                 $scope.page=$scope.page+1;
                 $scope.flag = true;
                 console.log($scope.page+'get my message pagination');
-            });
+                })
+
+            }
         }
-    }
     $scope.nomore=true;
 
     $scope.loadMore = function() {
         console.log($scope.flag);
         if($scope.flag)
         {
-            console.log('paginaaaaa'+$scope.page);
-            console.log("mas paginas " + $scope.page);
             $http.get(base_url + '/message/user/' + usuario.userid + '/page=' + $scope.page)
                 .success(function (data) {
-                    console.log(data.length + ' data.lenght');
                         for (var i = 0; i < data.length; i++) {
-                            console.log('entroooooo y añado     ' + data[i].text);
+                            console.log(data[i]);
                             if (data[i] != undefined) {
-                                $scope.messages.push(data[i]);
+                                console.log('los mensajeeeeessss');
+                                console.log($scope.messages);
+                                    var spl;
+                                    var str = data[i].text;
+                                console.log(str+'str');
+                                console.log('la i vale '+i);
+                                console.log('entro1');
+                                    if (str.search("youtube.com") != -1) {
+                                        console.log('entro2');
+                                        console.log('en el mensaje añado');
+                                        console.log($scope.messages[i]);
+                                        data[i].youtube=true;
+                                        var pl = str.split(" ");
+                                        for (var x = 0; x < pl.length; x++) {
+                                            if (pl[x].search("youtube.com") != -1) {
+                                                spl = pl[x].split("=")[1];
+                                                data[i].video = "https://www.youtube.com/embed/" +spl;
+
+                                            }
+                                        }
+                                        $scope.messages.push(data[i]);
+                                        console.log('mis mensajeeeeessss');
+                                        console.log($scope.messages);
+                                        console.log(data[i]+' es un video de youtube');
+                                    }
+                                    else {
+                                        console.log('entro3')
+                                        console.log('no es un video');
+                                        data[i].youtube = false;
+                                        $scope.messages.push(data[i]);
+                                    }
                             }
+
+                            console.log($scope.messages);
+                            console.log('$scope.messages[i]'+ $scope.messages.youtube +'el mensaje '+data[i].text);
                         }
                     if(data.length!=0) {
                         $scope.page = $scope.page + 1;
-                        console.log($scope.page);
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     }
                     else{
