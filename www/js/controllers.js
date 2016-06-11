@@ -1,6 +1,6 @@
 /* global angular, document, window */
 'use strict';
-var base_url = "http://localhost:8080";
+var base_url = "http://192.168.8.105:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
 .controller('AppCtrl', ['$scope','$http','$state', '$ionicModal', '$ionicPopover', '$timeout','$ionicFilterBar',function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar,socket) {
     // Form data for the login modal
@@ -63,6 +63,7 @@ $scope.search=function(){
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'block';
         var usuario = JSON.parse(sessionStorage["user"]);
         $http.get(base_url + '/users/' + usuario.userid, {headers: {'x-access-token': usuario.token}}).success(function (data) {
+            sessionStorage["miUser"]=JSON.stringify(data);
             $scope.userFoto = data.imageUrl;
             $scope.userName = data.username;
             $scope.userMail = data.mail;

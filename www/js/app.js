@@ -123,6 +123,42 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
                 }
             }
         })
+        .state('app.drones', {
+            url: '/drones',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/drones.html',
+                    controller: 'droneCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.userdrones', {
+            url: '/userdrones',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/userdrones.html',
+                    controller: 'userdroneCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.mydrones', {
+            url: '/drones',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/mydrones.html',
+                    controller: 'mydroneCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.createmsg', {
             url: '/createmsg',
             views: {

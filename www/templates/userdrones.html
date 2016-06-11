@@ -1,0 +1,60 @@
+<ion-view view-title="Drones">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+        <div align="center">
+        </div>
+        <div class="list card" ng-repeat="drone in userdrones">
+            <div align="right">
+                <button ng-if="!drone.have" ng-click="addtomydron(drone._id)" class="button-calm button-small button-icon ion-android-add">
+                    Add to my drones
+                </button>
+                <button ng-if="drone.have" ng-click="deletetomydron(drone._id)" class="button-assertive button-small button-icon ion-android-add">
+                    Delete from my drones
+                </button>
+            </div>
+            <div class="item item-avatar">
+                <h2>{{drone.vendor}}</h2>
+                <p>{{drone.model}}</p>
+            </div>
+
+            <div class="item item-body">
+                <img class="full-image" ng-src="{{drone.imageUrl}}">
+                <p>
+                    {{drone.description}}
+                </p>
+            </div>
+
+        </div>
+    </ion-content>
+    <script id="templates/modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">New Drone</h1>
+                <button class="button button-clear ion-close-circled" ng-click="modal.hide()"></button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Vendor</span>
+                        <input ng-model="newDrone.vendor" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Model</span>
+                        <input ng-model="newDrone.mod" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Description</span>
+                        <input ng-model="newDrone.desc" type="text">
+                    </label>
+                    <div class="padding">
+                        <button class="button button-full button-bar-calm ink" ng-click="takePicture()">Camera photo</button>
+                    </div>
+                    <button class="button button-full button-positive" ng-click="createDrone()">Create</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>
