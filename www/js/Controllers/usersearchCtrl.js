@@ -23,12 +23,13 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
 
     // Set Ink
     ionicMaterialInk.displayEffect();
-
+    $scope.userSearch={};
     function getUserSearch(){
         $scope.userSearched = userSearched;
         $http.get(base_url+'/api/user/'+userSearched).success(function (data) {
             $scope.usersearchedMail=data.mail;
             $scope.usersearchedImageUrl=data.imageUrl;
+            $scope.userSearch=data;
             var us = data._id;
             getMyMessages(data._id);
             getNumFollowers(data._id);
@@ -57,6 +58,18 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
                 console.log(err)
             });
     }
+    $scope.initChat = function (id) {
+        $http.post(base_url+'/chatt', {
+            token: miUsuario.token,
+            user: $scope.userSearch._id,
+            userid: miUsuario.userid
+        }).success(function (data) {
+            sessionStorage['conver']=JSON.stringify(data);
+            $state.go('app.chat');
+        }).error(function (err) {
+            console.log(err)
+        });
+    };
     $scope.following= function (numFollowing) {
         if(numFollowing!=0)
         $state.go("app.followingSearch");
