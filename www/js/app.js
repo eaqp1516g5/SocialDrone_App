@@ -135,6 +135,18 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett
                 }
             }
         })
+        .state('app.createdrones', {
+            url: '/createdrones',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/createdrone.html',
+                    controller: 'droneCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.userdrones', {
             url: '/userdrones',
             views: {

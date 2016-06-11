@@ -93,6 +93,9 @@ $scope.drones={};
 
         }
     getdrones();
+    $scope.creardrone= function () {
+        $state.go('app.createdrones');
+    }
     $scope.createDrone = function() {
         console.log('pictureeee');
         console.log($scope.picture);
@@ -128,6 +131,7 @@ $scope.drones={};
                 });
                 $scope.picture=undefined;
                 $scope.newDrone = null;
+                $state.go('app.drones');
                 getdrones()
             }, function (err) {
                 console.log(err);

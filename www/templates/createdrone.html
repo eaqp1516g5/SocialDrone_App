@@ -1,0 +1,27 @@
+<ion-view view-title="Create Drone">
+    <ion-content class="padding">
+        <br>
+        <br>
+        <div class="list">
+
+            <label class="item item-input">
+                <br>
+                <br>
+                <span class="input-label">Vendor</span>
+                <input ng-model="newDrone.vendor" type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Model</span>
+                <input ng-model="newDrone.mod" type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Description</span>
+                <input ng-model="newDrone.desc" type="text">
+            </label>
+            <div class="padding">
+                <button class="button button-full button-bar-calm ink" ng-click="takePicture()">Camera photo</button>
+            </div>
+            <button class="button button-full button-positive" ng-click="createDrone()">Create</button>
+        </div>
+    </ion-content>
+</ion-view>

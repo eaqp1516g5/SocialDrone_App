@@ -6,7 +6,7 @@
         </ion-refresher>
             <div align="center">
             </div>
-        <button class="button button-fab button-balanced icon ion-android-add" ng-click="modal.show()"></button>
+        <button class="button button-fab button-balanced icon ion-android-add" ng-click="creardrone()"></button>
         <div class="list card" ng-repeat="drone in drones">
             <div align="right">
                 <button ng-if="!drone.have" ng-click="addtomydron(drone._id)" class="button-calm button-small button-icon ion-android-add">

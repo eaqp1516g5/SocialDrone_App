@@ -12,6 +12,7 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
     $scope.Newcomment={};
     $scope.nomore=true;
     $scope.page=0;
+    $scope.updateUser={};
     var usuario = JSON.parse(sessionStorage["user"]);
     $scope.$on('$stateChangeSuccess', function() {
         $scope.loadMore();
@@ -155,6 +156,71 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                 console.log('You are not sure');
             }
         });
+    };
+    $ionicModal.fromTemplateUrl('templates/modal.html', {
+        scope: $scope
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.updatemail= function () {
+        if($scope.updateUser.email==undefined) {
+            $ionicPopup.alert({
+                title: 'Error',
+                content: 'Please introduce a valid mail'
+            });
+        }
+        else {
+            console.log($scope.userName);
+                $http.put(base_url+'/usersm/'+$scope.userName,{
+                    email:$scope.updateUser.email
+                }).success(function () {
+                    $scope.updateUser.email=null;
+                    $http.get(base_url + '/users/' + usuario.userid, {headers: {'x-access-token': usuario.token}}).success(function (data) {
+                        sessionStorage["miUser"] = JSON.stringify(data);
+                        $scope.userMail = data.mail;
+                    });
+                    $ionicPopup.alert({
+                        title: 'Perfect',
+                        content: 'Mail updated'
+                    });
+                })
+        }
+    };
+
+    $scope.updatepass= function () {
+        if($scope.updateUser.oldpass==undefined ||$scope.updateUser.newpass==undefined || $scope.updateUser.newpass2==undefined ){
+            $ionicPopup.alert({
+                title: 'Error',
+                content: 'Please fill your old and new passwords'
+            });
+        }
+        else if($scope.updateUser.newpass!=$scope.updateUser.newpass2){
+            $ionicPopup.alert({
+                title: 'Error',
+                content: 'Your new passwords does not match'
+            });
+        }
+        else{
+           $http.put(base_url+'/users/password/'+$scope.userName,{
+               password:$scope.updateUser.oldpass,
+               password1:$scope.updateUser.newpass
+           }).success(function (data) {
+               console.log(data);
+               $ionicPopup.alert({
+                   title: 'Perfect',
+                   content: 'Updated password'
+               });
+               $scope.updateUser.oldpass=null;
+               $scope.updateUser.newpass=null;
+               $scope.updateUser.newpass2=null;
+           }).error(function (err) {
+               $ionicPopup.alert({
+                   title: 'Error',
+                   content: 'Old password error'
+               });
+               $scope.updateUser.oldpass=null;
+           })
+        }
     };
     $scope.borrarMensaje = function (id) {
         var confirmPopup = $ionicPopup.confirm({
