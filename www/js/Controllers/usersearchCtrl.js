@@ -8,6 +8,7 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
     var miUsuario = JSON.parse(sessionStorage["user"]);
+    $scope.usuar= miUsuario;
     var userSearched = sessionStorage["userSearch"];
     $scope.Newcomment={};
     // Set Motion
@@ -70,6 +71,32 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
             console.log(err)
         });
     };
+    $scope.likes=function(id, likes){
+        var li = false;
+        for(var i = 0; i<likes.length; i++){
+            if(likes[i]==id){
+                li=true;
+            }
+        }
+        return li;
+    }
+    $scope.likeMenssage = function(id){
+        $http.post(base_url+"/message/" + id +"/like" , {token: miUsuario.token, userid: miUsuario.userid})
+            .success(function (data, status, headers, config) {
+                getMyMessages($scope.userSearch._id);
+            })
+            .error(function (error, status, headers, config) {
+                console.log(error);
+            });
+    };
+    $scope.dislikeMessage=function(id){
+        $http.delete(base_url + "/message/" + id + "/dislike",  {headers: {'x-access-token': miUsuario.token, userid:  miUsuario.userid}})
+            .success(function (data, status, headers, config) {
+                getMyMessages($scope.userSearch._id);
+            })
+            .error(function (error, status, headers, config) {
+            });
+    }
     $scope.following= function (numFollowing) {
         if(numFollowing!=0)
         $state.go("app.followingSearch");

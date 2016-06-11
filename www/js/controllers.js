@@ -615,7 +615,23 @@ $scope.search=function(){
         sessionStorage["msg"]=JSON.stringify(se);
         $state.go('app.createmsg');
     };
-
+    $scope.likes=function(id, likes){
+        var li = false;
+        for(var i = 0; i<likes.length; i++){
+            if(likes[i]==id){
+                li=true;
+            }
+        }
+        return li;
+    }
+    $scope.dislikeMessage=function(id){
+        $http.delete(base_url + "/message/" + id + "/dislike",  {headers: {'x-access-token': $scope.usuar.token, userid:  $scope.usuar.userid}})
+            .success(function (data, status, headers, config) {
+                getMessage();
+            })
+            .error(function (error, status, headers, config) {
+            });
+    }
     $scope.doRefresh = function() {
         getMessage();
         $scope.$broadcast('scroll.refreshComplete');
@@ -627,9 +643,10 @@ $scope.search=function(){
     }, 200);
     getMessage();
     $scope.likeMenssage = function(id){
-        $http.post(base_url+"/message/" + id +"/like" , {token: $scope.usuar.token})
+        $http.post(base_url+"/message/" + id +"/like" , {token: $scope.usuar.token, userid: $scope.usuar.userid})
             .success(function (data, status, headers, config) {
                 getMessage();
+
             })
             .error(function (error, status, headers, config) {
                 console.log(error);
@@ -847,7 +864,33 @@ $scope.search=function(){
 
         // Set Motion
         ionicMaterialMotion.fadeSlideInRight();
+        $scope.likes=function(id, likes){
+            var li = false;
+            for(var i = 0; i<likes.length; i++){
+                if(likes[i]==id){
+                    li=true;
+                }
+            }
+            return li;
+        }
 
+        $scope.dislikeMessage=function(id){
+            $http.delete(base_url + "/message/" + id + "/dislike",  {headers: {'x-access-token': $scope.usuar.token, userid:  $scope.usuar.userid}})
+                .success(function (data, status, headers, config) {
+                    $http.get(base_url+"/message/"+id) //hacemos get de todos los users
+                        .success(function(data){
+                            $scope.messages= data;
+                            $scope.comment = data.comment;
+                            sessionStorage["messagenot"]=JSON.stringify(data);;
+                        })
+                        .error(function(err){
+                            console.log(err);
+                        });
+                })
+                .error(function (error, status, headers, config) {
+                    console.log(error);
+                });
+        }
         $scope.myUser={}
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -978,7 +1021,7 @@ $scope.search=function(){
             $scope.modal.hide();
         };
         $scope.likeMenssage = function(id){
-            $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token})
+            $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token, userid: usuario.userid})
                 .success(function (data, status, headers, config) {
                     getcomment();
                 })
