@@ -9,7 +9,8 @@ angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','btfo
 
 angular.module('starter', ['ionic','ionic-modal-select','ion-autocomplete','jett.ionic.filter.bar', 'starter.controllers','ionic-material', 'ionMdInput','ngCordova', 'ngOpenFB', 'ngCordovaOauth', 'btford.socket-io','nl2br',  'angularMoment'])
     .factory('socketio',['$rootScope',function($rootScope){
-        var socket_url = "http://localhost:3000";
+        var socket_url = "http://10.83.46.166:3000";
+        sessionStorage['socket']=JSON.parse(false);
         var socket = io.connect(socket_url);
         return{
             on: function(eventName, callback){

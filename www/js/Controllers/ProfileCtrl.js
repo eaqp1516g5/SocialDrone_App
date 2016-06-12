@@ -2,7 +2,7 @@
  * Created by bernat on 17/04/16.
  */
 
-angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateParams','$location', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$ionicPopup','$ionicModal', '$ionicPopover','socketio','$sce', function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover,socket,$sce) {
+angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateParams','$location', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$ionicPopup','$ionicModal', '$ionicPopover','socketio','$sce','$cordovaVibration','$rootScope',  function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover,socket,$sce,$cordovaVibration,$rootScope) {
     $scope.users={};
     $scope.myUser={};
     $scope.us={};
@@ -13,6 +13,7 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
     $scope.nomore=true;
     $scope.page=0;
     $scope.updateUser={};
+    sessionStorage['conver']==undefined;
     var usuario = JSON.parse(sessionStorage["user"]);
     $scope.usuar=usuario;
     $scope.$on('$stateChangeSuccess', function() {
@@ -449,6 +450,26 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
         }
         return li;
     }
+    function get(){
+        if(sessionStorage['user']!=undefined){
+            var usuario=JSON.parse(sessionStorage['user']);
+    $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
+        console.log('salido');
+        console.log(sessionStorage['socket'])
+        if (sessionStorage['socket'] != undefined) {
+            var anda = JSON.parse(sessionStorage['socket']);
+            console.log(anda);
+            if (anda != true) {
+                console.log('entro');
+                sessionStorage['socket'] = JSON.stringify(true);
+                socket.emit('username', data.username);
+            }
+        }
+    })
+        }
+    }
+        get();
+
     $scope.likeMenssage = function(id){
         $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token, userid: usuario.userid})
             .success(function (data, status, headers, config) {
@@ -468,7 +489,25 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                 console.log(error);
             });
     };
-    $scope.dislikeMessage=function(id){
+    socket.on('chatmessage', function(data) {
+        if(sessionStorage['user']!=undefined){
+            user = JSON.parse(sessionStorage['user']);
+            if(user.userid!=data.user._id){
+                if($state.current.name!='app.chat'){
+                    $cordovaVibration.vibrate(1000);
+                }
+                else{
+                    if(sessionStorage['conver']!=undefined){
+                        var conver = JSON.parse(sessionStorage['conver']);
+                        if(conver._id!=data.chatid._id){
+                            $cordovaVibration.vibrate(1000);
+                        }
+                    }
+                }
+            }
+        }
+    });
+        $scope.dislikeMessage=function(id){
         $http.delete(base_url + "/message/" + id + "/dislike",  {headers: {'x-access-token': usuario.token, userid:  usuario.userid}})
             .success(function (data, status, headers, config) {
                 getMyMessages();
