@@ -390,7 +390,7 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
         });
         $timeout(function() {
             myPopup.close(); //close the popup after 3 seconds for some reason
-        }, 6000);
+        }, 20000);
     };
 
     $scope.openModal = function(id) {
