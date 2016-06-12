@@ -54,6 +54,28 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
             $http.get(base_url+'/message/user/'+userid).success(function (data) {
                 console.log(data);
                 $scope.messages=data;
+                var spl;
+                console.log('$scope.messages' + $scope.messages);
+                for (var i = 0; i < data.length; i++) {
+                    var str = data[i].text;
+                    if (str.search("youtube.com") != -1) {
+                        $scope.messages[i].youtube=true;
+                        console.log('$scope.messages2' + $scope.messages);
+                        console.log(data[i]+' es un video de youtube');
+                        var pl = str.split(" ");
+                        for (var x = 0; x < pl.length; x++) {
+                            if (pl[x].search("youtube.com") != -1) {
+                                spl = pl[x].split("=")[1];
+                                data[i].video = "https://www.youtube.com/embed/" +spl;
+                            }
+                        }
+                    }
+                    else{
+                        $scope.messages[i].youtube=false;
+                    }
+                    console.log($scope.messages);
+                    console.log('$scope.messages[i]'+$scope.messages.youtube+'el mensaje '+data[i].text);
+                }
             }).error(function (err) {
                 console.log(err)
             });
@@ -215,6 +237,6 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
         });
         $timeout(function() {
             myPopup.close(); //close the popup after 3 seconds for some reason
-        }, 6000);
+        }, 20000);
     };
 });

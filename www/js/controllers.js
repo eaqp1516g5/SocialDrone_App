@@ -717,18 +717,44 @@ $scope.search=function(){
         console.log("mas");
         $http.get(base_url + "/messages/pag="+ $scope.pag) //hacemos get de todos los messages.js
             .success(function (data) {
-                console.log(data.data);
-                for(var i = 0; i<data.data.length;i++){
-                    $scope.messages.push(data.data[i]);
+                console.log('esto es la longitud')
+                for (var i = 0; i < data.data.length; i++) {
+                    if (data.data[i] != undefined) {
+                        var spl;
+                        var str = data[i].text;
+                        if (str.search("youtube.com") != -1) {
+                            data[i].youtube=true;
+                            var pl = str.split(" ");
+                            for (var x = 0; x < pl.length; x++) {
+                                if (pl[x].search("youtube.com") != -1) {
+                                    spl = pl[x].split("=")[1];
+                                    data.data[i].video = "https://www.youtube.com/embed/" +spl;
+
+                                }
+                            }
+                            $scope.messages.push(data.data[i]);
+                            console.log(data.data[i]+' es un video de youtube');
+                        }
+                        else {
+                            console.log('entro3')
+                            console.log('no es un video');
+                            data.data[i].youtube = false;
+                            $scope.messages.push(data.data[i]);
+                        }
+                    }
+                    if(data.data.length!=0) {
+                        $scope.page = $scope.page + 1;
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    }
+                    else{
+                        $scope.nomore = false;
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    }
                 }
-                $scope.pag=$scope.pag+1;
-                console.log($scope.pag);
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            })
-            .error(function (err) {
-                $scope.nomore=false;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            });
+            }).error(function (err) {
+            $scope.nomore = false;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        })
     }
     $scope.postcomment = function() {
         var msg_id= sessionStorage["comment"];
@@ -814,6 +840,26 @@ $scope.search=function(){
         $http.get(base_url + "/messages/pag="+$scope.pag) //hacemos get de todos los messages.js
             .success(function (data) {
                 $scope.messages = data.data;
+                var spl;
+                for (var i = 0; i < data.data.length; i++) {
+                    var str = data.data[i].text;
+                    if (str.search("youtube.com") != -1) {
+                        $scope.messages[i].youtube=true;
+                        console.log('$scope.messages2' + $scope.messages);
+                        console.log(data.data[i]+' es un video de youtube');
+                        var pl = str.split(" ");
+                        for (var x = 0; x < pl.length; x++) {
+                            if (pl[x].search("youtube.com") != -1) {
+                                spl = pl[x].split("=")[1];
+                                data.data[i].video = "https://www.youtube.com/embed/" +spl;
+                            }
+                        }
+                    }
+                    else{
+                        console.log('no es un video');
+                        $scope.messages[i].youtube=false;
+                    }
+                }
                 $scope.pag=$scope.pag+1;
                 $http.get(base_url + '/users/' + $scope.usuar.userid, {headers: {'x-access-token': $scope.usuar.token}})
                     .success(function (data) {
@@ -945,7 +991,7 @@ $scope.search=function(){
             });
             $timeout(function() {
                 myPopup.close(); //close the popup after 3 seconds for some reason
-            }, 6000);
+            }, 20000);
         };
         $scope.postcomment = function() {
             var msg_id= sessionStorage["comment"];

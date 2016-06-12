@@ -64,16 +64,30 @@ angular.module('starter').controller('SignupCtrl',function($scope, $ionicModal, 
             lastname: $scope.newUser.lastname,
             mail: $scope.newUser.mail}
         };
-        $cordovaFileTransfer.upload(base_url+'/user_movil',$scope.picture,options).then(
-        function (data){
-            $state.go('app.login');
-        }, function (err){
-            console.log(err);
+        if($scope.newUser.username==undefined || $scope.newUser.password==undefined || $scope.newUser.name==undefined || $scope.newUser.lastname==undefined || $scope.newUser.mail==undefined ){
             $ionicPopup.alert({
-                title: 'Fill the fields correctly ',
-                content: err
+                title: 'Error',
+                content: 'Fill the fields correctly '
             });
-        });
+        }
+        else if($scope.picture==undefined){
+            $ionicPopup.alert({
+                title: 'Error',
+                content: 'Please select a foto '
+            });
+        }
+       else {
+            $cordovaFileTransfer.upload(base_url + '/user_movil', $scope.picture, options).then(
+                function (data) {
+                    $state.go('app.login');
+                }, function (err) {
+                    console.log(err);
+                    $ionicPopup.alert({
+                        title: 'Fill the fields correctly ',
+                        content: err
+                    });
+                });
+        }
     }
     
     
