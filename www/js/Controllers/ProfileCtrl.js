@@ -33,9 +33,9 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
         $scope.page=0;
         if (sessionStorage["user"] != undefined) {
             $http.get(base_url+'/message/user/'+usuario.userid+'/page='+$scope.page).success(function (data) {
-                console.log('los mensajes')
-                console.log(data);
                 $scope.messages=data;
+                console.log('los mensajes')
+                console.log($scope.messages);
                 var spl;
                 console.log('$scope.messages' + $scope.messages);
                 for (var i = 0; i < data.length; i++) {
