@@ -45,19 +45,27 @@
                     </div>
                     {{msg.text2}}
                     <p>
-                        <a class="subdued">{{msg.like}} Likes </a>
+                        <a class="subdued">{{msg.like.length}} Likes </a>
                         <a class="subdued" ng-click="showcomments(msg.comment.length, msg._id)">{{msg.comment.length}} Comments </a>
                     </p>
                     <div class="pull-left">
                         <h4><i class="icon ion-clock"></i>{{msg.createdAt}}</h4>
                     </div>
                 </div>
+
                 <div class="item tabs tabs-secondary tabs-icon-left">
-                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
-                        <i class="icon ion-thumbsup" ng-click="likeMenssage(msg._id)"></i> Like
-                    </a>
-                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5">
-                        <i class="icon ion-chatbox" ng-click="showPopup(msg._id)"></i> Comment
+                    <div ng-if="!likes(usuar.userid, msg.like)">
+                        <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5" ng-click="likeMenssage(msg._id)">
+                            <i class="icon ion-thumbsup"></i> Like
+                        </a>
+                    </div>
+                    <div ng-if="likes(usuar.userid, msg.like)">
+                        <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5" ng-click="dislikeMessage(msg._id)">
+                            <i class="icon ion-thumbsdown"></i> Dislike
+                        </a>
+                    </div>
+                    <a class="tab-item" data-ink-color="#336699" data-ink-opacity="0.5" ng-click="showPopup(msg._id)">
+                        <i class="icon ion-chatbox" ></i> Comment
                     </a>
                 </div>
             </div>

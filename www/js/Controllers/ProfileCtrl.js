@@ -14,6 +14,7 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
     $scope.page=0;
     $scope.updateUser={};
     var usuario = JSON.parse(sessionStorage["user"]);
+    $scope.usuar=usuario;
     $scope.$on('$stateChangeSuccess', function() {
         $scope.loadMore();
     });
@@ -439,9 +440,17 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
     $scope.Cancel= function () {
         $scope.modal.hide();
     };
+    $scope.likes=function(id, likes){
+        var li = false;
+        for(var i = 0; i<likes.length; i++){
+            if(likes[i]==id){
+                li=true;
+            }
+        }
+        return li;
+    }
     $scope.likeMenssage = function(id){
-        var usuario = JSON.parse(sessionStorage["user"]);
-        $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token})
+        $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token, userid: usuario.userid})
             .success(function (data, status, headers, config) {
                 getMyMessages();
             })
@@ -449,4 +458,12 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
                 console.log(error);
             });
     };
+    $scope.dislikeMessage=function(id){
+        $http.delete(base_url + "/message/" + id + "/dislike",  {headers: {'x-access-token': usuario.token, userid:  usuario.userid}})
+            .success(function (data, status, headers, config) {
+                getMyMessages();
+            })
+            .error(function (error, status, headers, config) {
+            });
+    }
 }]);
