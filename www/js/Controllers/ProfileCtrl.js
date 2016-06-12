@@ -2,7 +2,7 @@
  * Created by bernat on 17/04/16.
  */
 
-angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateParams','$location', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$ionicPopup','$ionicModal', '$ionicPopover','socketio','$sce', function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover,$sce,socket) {
+angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateParams','$location', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$ionicPopup','$ionicModal', '$ionicPopover','socketio','$sce', function($scope,$state, $stateParams,$location, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $ionicPopup,$ionicModal, $ionicPopover,socket,$sce) {
     $scope.users={};
     $scope.myUser={};
     $scope.us={};
@@ -453,6 +453,16 @@ angular.module('starter').controller('ProfileCtrl', ['$scope','$state', '$stateP
         $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token, userid: usuario.userid})
             .success(function (data, status, headers, config) {
                 getMyMessages();
+                $http.get(base_url + "/message/" + id)
+                    .success(function (data) {
+                        $scope.message1 = data;
+                        $scope.comment = data.comment;
+                        socket.emit('comment', data.username._id, function (data) {
+                        })
+                    })
+                    .error(function (err) {
+                        console.log(err);
+                    });
             })
             .error(function (error, status, headers, config) {
                 console.log(error);

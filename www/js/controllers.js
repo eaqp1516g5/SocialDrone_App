@@ -2,7 +2,7 @@
 'use strict';
 var base_url = "http://localhost:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
-.controller('AppCtrl', ['$scope','$http','$state', '$ionicModal', '$ionicPopover', '$timeout','$ionicFilterBar',function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar,socket) {
+.controller('AppCtrl', ['$scope','$http','$state', '$ionicModal', '$ionicPopover', '$timeout','$ionicFilterBar','socketio',function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar,socket) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -261,7 +261,7 @@ $scope.search=function(){
         }
     };
 })
-    .controller('addeventCtrl', function($scope, $cordovaGeolocation,$state, $http) {
+    .controller('addeventCtrl',['$scope', '$cordovaGeolocation','$state', '$http','socketio', function($scope, $cordovaGeolocation,$state, $http,socket) {
         var options = {timeout: 10000, enableHighAccuracy: true};
         $scope.event={};
         var marker;
@@ -302,7 +302,7 @@ $scope.search=function(){
             if(marker!=undefined)
                 $state.go('app.add');
         }
-    })
+    }])
     .controller('showeventCtrl', function($scope, $cordovaGeolocation,$state, $http, $compile) {
         var options = {timeout: 10000, enableHighAccuracy: true};
         //var base_url = "http://192.168.0.30:8080";
@@ -437,7 +437,7 @@ $scope.search=function(){
         };
 
     })
-    .controller('addCtrl', function($scope, $cordovaGeolocation,$state, $http) {
+    .controller('addCtrl',['$scope', '$cordovaGeolocation','$state', '$http','socketio', function($scope, $cordovaGeolocation,$state, $http, socket) {
         var options = {timeout: 10000, enableHighAccuracy: true};
         $scope.event={};
         var a= new Date();
@@ -472,6 +472,8 @@ $scope.search=function(){
                             }).success(function (data) {
                                 console.log(data);
                                 sessionStorage["eventoid"] = JSON.stringify(data);
+                                socket.emit('event',$scope.user.userid, function(data){
+                                } )
                                 $state.go('app.event');
                             }).error(function (error, status, headers, config) {
                                 console.log(error);
@@ -482,7 +484,7 @@ $scope.search=function(){
             $scope.cancel = function () {
                 $state.go('app.profile');
             };
-        })
+        }])
     .controller('eventCtrl', function($scope, $cordovaGeolocation,$state, $http) {
        // var base_url = "http://localhost:8080";
         $scope.object={};
@@ -596,7 +598,7 @@ $scope.search=function(){
     ionicMaterialInk.displayEffect();
 })
     
-.controller('ActivityCtrl', function($scope,$ionicModal,$ionicPopup, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
+.controller('ActivityCtrl',['$scope','$ionicModal','$ionicPopup', '$stateParams', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$state','socketio', function($scope,$ionicModal,$ionicPopup, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state,socket) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     var usuario = JSON.parse(sessionStorage["user"]);
@@ -646,6 +648,16 @@ $scope.search=function(){
         $http.post(base_url+"/message/" + id +"/like" , {token: $scope.usuar.token, userid: $scope.usuar.userid})
             .success(function (data, status, headers, config) {
                 getMessage();
+                $http.get(base_url + "/message/" + id)
+                    .success(function (data) {
+                        $scope.message1 = data;
+                        $scope.comment = data.comment;
+                        socket.emit('comment', data.username._id, function (data) {
+                        })
+                    })
+                    .error(function (err) {
+                        console.log(err);
+                    });
 
             })
             .error(function (error, status, headers, config) {
@@ -709,7 +721,8 @@ $scope.search=function(){
                                         text: text,
                                         imageUrl:data.imageUrl,
                                         token: usuario.token
-                                    }).success(function () {
+                                    }).success(function (data) {
+                                        socket.emit('comment', data.username._id);
                                         $scope.Newcomment.text=null;
                                         myPopup.close();
                                         getMessage();
@@ -786,6 +799,7 @@ $scope.search=function(){
                     imageUrl:data.imageUrl,
                     token: usuario.token
                 }).success(function () {
+                    socket.emit('comment', data.username._id);
                     getMessage();
                     $scope.Newcomment.text=null;
                     $scope.modal.hide();
@@ -834,6 +848,7 @@ $scope.search=function(){
                         $http.get(base_url + "/message/" + id) //hacemos get de todos los users
                             .success(function (data) {
                                 $scope.message1 = data;
+                                socket.emit('comment', data.username._id);
                                 $scope.comment = data.comment;
                                 $scope.newComment.message = null;
                                 console.log(data);
@@ -891,8 +906,8 @@ $scope.search=function(){
     }
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
-})
-    .controller('CommentCtrl', function($scope,$ionicModal,$ionicPopup, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
+}])
+    .controller('CommentCtrl',['$scope','$ionicModal','$ionicPopup', '$stateParams', '$timeout', 'ionicMaterialMotion', 'ionicMaterialInk', '$http', '$state','socketio' ,function($scope,$ionicModal,$ionicPopup, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state,socket) {
         // Set Header
         $scope.usuar = JSON.parse(sessionStorage["user"]);
         var msg_id = sessionStorage["viewcomment"];
@@ -1017,7 +1032,8 @@ $scope.search=function(){
                                             text: text,
                                             imageUrl:data.imageUrl,
                                             token: usuario.token
-                                        }).success(function () {
+                                        }).success(function (data) {
+                                            socket.emit('comment', data.username._id);
                                             $scope.Newcomment.text=null;
                                             myPopup.close();
                                             getcomment();
@@ -1048,7 +1064,8 @@ $scope.search=function(){
                         text: text,
                         imageUrl:data.imageUrl,
                         token: usuario.token
-                    }).success(function () {
+                    }).success(function (data) {
+                        socket.emit('comment', data.username._id);
                         getcomment();
                         $scope.Newcomment.text=null;
                         $scope.modal.hide();
@@ -1070,12 +1087,22 @@ $scope.search=function(){
             $http.post(base_url+"/message/" + id +"/like" , {token: usuario.token, userid: usuario.userid})
                 .success(function (data, status, headers, config) {
                     getcomment();
+                    $http.get(base_url + "/message/" + id)
+                        .success(function (data) {
+                            $scope.message1 = data;
+                            $scope.comment = data.comment;
+                            socket.emit('comment', data.username._id, function (data) {
+                            })
+                        })
+                        .error(function (err) {
+                            console.log(err);
+                        });
                 })
                 .error(function (error, status, headers, config) {
                     console.log(error);
                 });
         };
-    })
+    }])
         .controller('UpdatemsgCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, $state) {
         $scope.$parent.showHeader();
         $scope.$parent.clearFabs();

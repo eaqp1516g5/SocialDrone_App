@@ -1,7 +1,7 @@
 /**
  * Created by bernatmir on 15/5/16.
  */
-angular.module('starter').controller('usersearchCtrl', function($scope,ionicMaterialInk, ionicMaterialMotion, $ionicModal, $ionicPopover, $timeout, $http,$ionicPopup, $state) {
+angular.module('starter').controller('usersearchCtrl',['$scope','ionicMaterialInk', 'ionicMaterialMotion', '$ionicModal', '$ionicPopover', '$timeout', '$http','$ionicPopup', '$state','socketio' ,function($scope,ionicMaterialInk, ionicMaterialMotion, $ionicModal, $ionicPopover, $timeout, $http,$ionicPopup, $state,socket) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = false;
@@ -106,6 +106,16 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
         $http.post(base_url+"/message/" + id +"/like" , {token: miUsuario.token, userid: miUsuario.userid})
             .success(function (data, status, headers, config) {
                 getMyMessages($scope.userSearch._id);
+                $http.get(base_url + "/message/" + id)
+                    .success(function (data) {
+                        $scope.message1 = data;
+                        $scope.comment = data.comment;
+                        socket.emit('comment', data.username._id, function (data) {
+                        })
+                    })
+                    .error(function (err) {
+                        console.log(err);
+                    });
             })
             .error(function (error, status, headers, config) {
                 console.log(error);
@@ -200,7 +210,7 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
                 follow:userSearched
             }).success(function (data) {
                 getUserSearch();
-                //socket.emit('follow',user, function(data){})
+                socket.emit('follow',userSearched, function(data){})
             }).error(function (err) {
                 console.log(err)
             });
@@ -247,10 +257,12 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
                                         text: text,
                                         imageUrl:data.imageUrl,
                                         token: miUsuario.token
-                                    }).success(function () {
+                                    }).success(function (data) {
+                                        socket.emit('comment', data.username._id);
                                         $scope.Newcomment.text=null;
                                         myPopup.close();
                                         getMyMessages(us);
+
                                     })
                                 });
                             }
@@ -266,4 +278,4 @@ angular.module('starter').controller('usersearchCtrl', function($scope,ionicMate
             myPopup.close(); //close the popup after 3 seconds for some reason
         }, 20000);
     };
-});
+}]);
