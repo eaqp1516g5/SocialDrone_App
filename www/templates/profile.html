@@ -14,7 +14,7 @@
             <a ui-sref="app.mydrones" class="tab-item">
                 <i class="icon ion-plane"></i> My drones
             </a>
-            <a class="tab-item">
+            <a class="tab-item"  ng-if="!isFB">
                 <i class="icon ion-ios-gear" ng-click="modal.show()"></i> Edit profile
             </a>
         </div>

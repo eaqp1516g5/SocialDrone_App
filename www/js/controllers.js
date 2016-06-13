@@ -60,6 +60,7 @@ $scope.search=function(){
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
     };
     $scope.showNavBar = function () {
+        $scope.isFB=false;
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'block';
         var usuario = JSON.parse(sessionStorage["user"]);
         $http.get(base_url + '/users/' + usuario.userid, {headers: {'x-access-token': usuario.token}}).success(function (data) {
@@ -67,6 +68,10 @@ $scope.search=function(){
             $scope.userFoto = data.imageUrl;
             $scope.userName = data.username;
             $scope.userMail = data.mail;
+            console.log('este es el usuario');
+            if(data.id_facebook!=undefined){
+                $scope.isFB=true;
+            }
             $http.get(base_url + '/following/' + usuario.userid).success(function (data) {
                 console.log('Numero de following' + data.length);
                 $scope.numFollowing = data.length;
