@@ -1,8 +1,9 @@
 /**
  * Created by Admin on 07/06/2016.
  */
-angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'ionicMaterialMotion', '$ionicModal', '$ionicPopover', '$timeout', '$http','$ionicPopup', '$state','socketio','$ionicScrollDelegate', function($scope,ionicMaterialInk, ionicMaterialMotion, $ionicModal, $ionicPopover, $timeout, $http,$ionicPopup, $state,socket, $ionicScrollDelegate) {
+angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'ionicMaterialMotion', '$ionicModal', '$ionicPopover', '$timeout', '$http','$ionicPopup', '$state','socketio','$ionicScrollDelegate','$rootScope', function($scope,ionicMaterialInk, ionicMaterialMotion, $ionicModal, $ionicPopover, $timeout, $http,$ionicPopup, $state,socket, $ionicScrollDelegate,$rootScope) {
     // Delay expansion
+    var conver={};
     $timeout(function () {
         $scope.isExpanded = true;
         $scope.$parent.setExpanded(true);
@@ -15,21 +16,34 @@ angular.module('starter').controller('chatCtrl',['$scope','ionicMaterialInk', 'i
             var usuario = JSON.parse(sessionStorage["user"]);
             $scope.usuar= usuario;
             $http.get(base_url+'/users/'+usuario.userid,{headers: {'x-access-token': usuario.token}}).success(function (data) {
-                socket.emit('username', data.username);
+                console.log('salido');
+                console.log(sessionStorage['socket'])
+                if(sessionStorage['socket']!=undefined){
+                    var anda=JSON.parse(sessionStorage['socket']);
+                    console.log(anda);
+                    if(anda!=true) {
+                        console.log('entro');
+                        sessionStorage['socket'] = JSON.stringify(true);
+                        socket.emit('username', data.username);
+                    }
+                    if(sessionStorage['conver']!=undefined) {
+                        conver = JSON.parse(sessionStorage['conver']);
+                        $timeout(function(){
+                            $http.get(base_url + '/chatt/conversation/' + conver._id, {headers: {'x-access-token': usuario.token}})
+                                .success(function (data) {
+                                    $scope.chat = data;
+                                    $timeout(function () {
+                                        viewscroll.scrollBottom();
+                                    }, 0);
+                                    socket.emit('visto', {userid: usuario.userid, chat: conver._id});
+                                })
+                                .error(function (err) {
+                                });
+                        },100)
+                    }
+                }
                 }).error(function(err){
             });
-            var conver = JSON.parse(sessionStorage['conver']);
-            $http.get(base_url + '/chatt/conversation/' + conver._id, {headers: {'x-access-token': usuario.token}})
-                .success(function (data) {
-                    $scope.chat=data;
-                    $timeout(function()
-                    {
-                        viewscroll.scrollBottom();
-                    },0);
-                    socket.emit('visto', {userid: usuario.userid, chat: conver._id});
-                })
-                .error(function (err) {
-                });
         }
     }
     $scope.viewProfile = function(profile){

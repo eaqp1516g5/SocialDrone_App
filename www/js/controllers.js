@@ -1,6 +1,6 @@
 /* global angular, document, window */
 'use strict';
-var base_url = "http://localhost:8080";
+var base_url = "http://10.83.46.166:8080";
 angular.module('starter.controllers', ['ngOpenFB'])
 .controller('AppCtrl', ['$scope','$http','$state', '$ionicModal', '$ionicPopover', '$timeout','$ionicFilterBar','socketio',function($scope,$http,$state, $ionicModal, $ionicPopover, $timeout,$ionicFilterBar,socket) {
     // Form data for the login modal
@@ -290,7 +290,24 @@ $scope.search=function(){
                     }
                 });
         }, function(error){
-            console.log("Could not get location");
+            var latLng = new google.maps.LatLng(0, 0);
+
+            var mapOptions = {
+                center: latLng,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            google.maps.event.addListener($scope.map, 'click', function(event){
+                if (marker==undefined) {
+                    placeMarker(event.latLng, $scope.map);
+                }
+                else{
+                    marker.setMap(null);
+                    placeMarker(event.latLng, $scope.map);
+                }
+            });
         });
         function placeMarker(location, ma){
             marker=new google.maps.Marker({
